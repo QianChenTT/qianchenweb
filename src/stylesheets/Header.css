@@ -1,0 +1,23 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    height: 100px;
+}
+
+.header-brand-logo{
+    position: absolute;
+    margin: 10px 0 10px 10px;
+    width: auto;
+    height: 80px;
+    left: 10px;
+}
+
+.header-text {
+    font-size: 64px;
+    color: white;
+}
+

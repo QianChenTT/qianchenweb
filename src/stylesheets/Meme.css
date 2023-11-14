@@ -1,0 +1,48 @@
+.meme-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.meme-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.form-input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.form-input{
+    border-radius: 5px;
+    border: 1px solid;
+    height: 30px;
+    font-size: 18px;
+    text-indent: 5px;
+}
+
+
+.form-button{
+    height: 40px;
+    border-radius: 5px;
+    border: black 1px solid;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.meme-image{
+    width: 70%;
+    height: auto;
+    align-content: center;
+}
+
