@@ -20,7 +20,7 @@ const Meme = () => {
     })
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
   }
 
