@@ -9,33 +9,33 @@ const Header = () => {
 
   const subtitles = [
     "Computer Engineering",
-    "University of Waterloo",
-    "Sample text"
+    "University Of Waterloo",
+    "Cyber Security"
   ];
+
+  const baseTypingSpeed = 100;
 
   React.useEffect(() => {
     const currentDisplay = subtitles[subtitleIndex];
+    console.log(currentDisplay);
     const printTimeouts: (number | undefined)[] = [];
     for(let i = 0; i < currentDisplay.length; i++){
       const typeDisplay = setTimeout(() => {
         setDisplayText(prev => {return prev + currentDisplay[i]});
-      }, i * 100)
+      }, i * baseTypingSpeed)
       printTimeouts.push(typeDisplay)
     }
 
-    const wait = setTimeout(() => {
-      for(let i = 0; i < currentDisplay.length; i++){
-        const typeDisplay = setTimeout(() => {
-          setDisplayText(prev => {return prev.slice(0, prev.length -1)});
-        }, i * 100 + 2000)
+    for(let i = 0; i < currentDisplay.length; i++){
+      const typeDisplay = setTimeout(() => {
+        setDisplayText(prev => {return prev.slice(0, prev.length -1)});
+      }, i * baseTypingSpeed + 2000 + 2000)
         printTimeouts.push(typeDisplay)
-      }
-    }, 2000)
-    printTimeouts.push(wait);
+    }
 
     const timeoutId = setTimeout(() => {
       setSubtitleIndex(prev => {return ((prev + 1) % subtitles.length)});
-    },2 * currentDisplay.length * 100 + 2000)
+    },2 * (currentDisplay.length - 1) * baseTypingSpeed + 2000 + 1000)
 
     printTimeouts.push(timeoutId)
 
