@@ -18,7 +18,8 @@ const Header = () => {
 
   React.useEffect(() => {
     const currentDisplay = subtitles[subtitleIndex];
-    const printTimeouts: (number | undefined)[] = [];
+    const printTimeouts: (NodeJS.Timeout | undefined)[] = [];
+
     for(let i = 0; i < currentDisplay.length; i++){
       const typeDisplay = setTimeout(() => {
         setDisplayText(prev => {return prev + currentDisplay[i]});
