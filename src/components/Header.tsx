@@ -1,4 +1,5 @@
 import React from 'react'
+import HouseKeeper from "./HouseKeeper.tsx";
 import '../stylesheets/Header.css'
 
 const Header = () => {
@@ -17,7 +18,6 @@ const Header = () => {
 
   React.useEffect(() => {
     const currentDisplay = subtitles[subtitleIndex];
-    console.log(currentDisplay);
     const printTimeouts: (number | undefined)[] = [];
     for(let i = 0; i < currentDisplay.length; i++){
       const typeDisplay = setTimeout(() => {
@@ -66,24 +66,51 @@ const Header = () => {
   //   }
   //
   // }, [charIndex, subtitleIndex, displayText.length]);
+
   //subtitle typing effect ends here
 
   return (
     <>
-      <div className="header">
-        <h1 className="header-title">
-          Han
-        </h1>
-        <h2 className="header-subtitle">
-          {displayText}
-        </h2>
+      <div className="header container-fluid p-0">
+        <img src="../../public/assets/backgorund-img.png" alt="" className="header-image"/>
+        <div className="header-titles">
+          <h1 className="header-title"> Han </h1>
+          <h2 className="header-subtitle"> {"~ han$ " + displayText} </h2>
+        </div>
+
+        <HouseKeeper/>
+        {/*<div className="container-fluid p-0">*/}
+        {/*  <nav className="navbar navbar-expand-lg bg-body-tertiary header-navbar">*/}
+        {/*    <div className="container-fluid">*/}
+        {/*      <a className="navbar-brand" href="#">Navbar</a>*/}
+        {/*      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">*/}
+        {/*        <span className="navbar-toggler-icon"></span>*/}
+        {/*      </button>*/}
+        {/*      <div className="collapse navbar-collapse" id="navbarNav">*/}
+        {/*        <ul className="navbar-nav">*/}
+        {/*          <li className="nav-item">*/}
+        {/*            <a className="nav-link active" aria-current="page" href="#">Home</a>*/}
+        {/*          </li>*/}
+        {/*          <li className="nav-item">*/}
+        {/*            <a className="nav-link" href="#">Features</a>*/}
+        {/*          </li>*/}
+        {/*          <li className="nav-item">*/}
+        {/*            <a className="nav-link" href="#">Pricing</a>*/}
+        {/*          </li>*/}
+        {/*          <li className="nav-item">*/}
+        {/*            <a className="nav-link disabled" aria-disabled="true">Disabled</a>*/}
+        {/*          </li>*/}
+        {/*        </ul>*/}
+        {/*      </div>*/}
+        {/*    </div>*/}
+        {/*  </nav>*/}
+        {/*</div>*/}
       </div>
     </>
   )
 }
 
 export default Header;
-
 
 
 //Meme Generator Header
