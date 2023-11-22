@@ -1,5 +1,6 @@
 import React from 'react'
 import HouseKeeper from "./HouseKeeper.tsx";
+import backgroundImage from "../../public/assets/backgorund-img.png"
 import '../stylesheets/Header.css'
 
 const Header = () => {
@@ -73,7 +74,7 @@ const Header = () => {
   return (
     <>
       <div className="header container-fluid p-0">
-        <img src="../../public/assets/backgorund-img.png" alt="" className="header-image"/>
+        <img src={backgroundImage} alt="" className="header-image"/>
         <div className="header-titles">
           <h1 className="header-title"> Han </h1>
           <h2 className="header-subtitle"> {"~ han$ " + displayText} </h2>
