@@ -1,0 +1,29 @@
+.body-navbar-container{
+    max-width: 50%;
+}
+
+.body .body-navbar{
+    /*width: 500px;*/
+    border-radius: 100px;
+    background: rgb(162,217,206);
+    background: -moz-linear-gradient(180deg, rgba(162,217,206,1) 0%, rgba(102,178,178,1) 50%, rgba(240,229,216,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(162,217,206,1) 0%, rgba(102,178,178,1) 50%, rgba(240,229,216,1) 100%);
+    background: linear-gradient(180deg, rgba(162,217,206,1) 0%, rgba(102,178,178,1) 50%, rgba(240,229,216,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#a2d9ce",endColorstr="#f0e5d8",GradientType=1);
+}
+
+
+.body .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    border-radius: 100px;
+    background-color: rgba(102,178,178,1);
+    color: black;
+}
+
+.body .nav-pills .nav-link{
+    border-radius: 100px;
+    color: black;
+}
+
+.body .nav-pills .nav-link:Hover{
+    color: black;
+}

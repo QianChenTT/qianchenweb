@@ -17,7 +17,7 @@ If you are developing a production application, we recommend updating the config
    parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    project: ['./info.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
    },
 ```
