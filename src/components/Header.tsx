@@ -71,7 +71,6 @@ const Header = () => {
           <h1 className="header-title"> Han </h1>
           <h2 className="header-subtitle"> {"~ han$ " + displayText} </h2>
         </div>
-        <HouseKeeper/>
       </Container>
     </>
   )

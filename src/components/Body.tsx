@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
+import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container'
 import HouseKeeper from "./HouseKeeper.tsx";
 import backgroundImage from "../../public/assets/backgorund-img.png"
@@ -10,6 +11,10 @@ import '../stylesheets/Body.css'
 const Body = () => {
   return (
     <>
+      <Container className="p-0">
+        <Image src="/assets/housekeeper-background.png" fluid/>
+        <HouseKeeper/>
+      </Container>
       <Container className="body" fluid>
         <Container className="body-navbar-container" fluid>
           <Tab.Container
