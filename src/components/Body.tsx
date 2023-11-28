@@ -6,16 +6,18 @@ import Tab from 'react-bootstrap/Tab';
 import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container'
 import HouseKeeper from "./HouseKeeper.tsx";
+import {Particle} from "./Particle.tsx";
 import backgroundImage from "../../public/assets/backgorund-img.png"
 import '../stylesheets/Body.css'
 const Body = () => {
   return (
     <>
-      <Container className="p-0">
-        <Image src="/assets/housekeeper-background.png" fluid/>
-        <HouseKeeper/>
-      </Container>
-      <Container className="body" fluid>
+      <Container className="body p-0" fluid>
+        {/*<Particle/>*/}
+        <Container className="p-0" fluid>
+          {/*<Image src="/assets/housekeeper-background.png" fluid/>*/}
+          <HouseKeeper/>
+        </Container>
         <Container className="body-navbar-container" fluid>
           <Tab.Container
             id="left-tabs-example"
@@ -45,7 +47,7 @@ const Body = () => {
             <Row>
               <Col>
                 <Tab.Content>
-                  <Tab.Pane eventKey="first">This is an about me page</Tab.Pane>
+                  <Tab.Pane eventKey="first"></Tab.Pane>
                   <Tab.Pane eventKey="second">This is an skill page</Tab.Pane>
                   <Tab.Pane eventKey="third">This is an project page</Tab.Pane>
                   <Tab.Pane eventKey="fourth">This is a page for wonderful stories</Tab.Pane>

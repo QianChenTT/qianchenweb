@@ -24,6 +24,7 @@
 
 /*Main Page Header*/
 
+
 .header {
     /*background-image: url("../../public/assets/backgorund-img.png");*/
     /*background-repeat: no-repeat;*/
@@ -55,26 +56,36 @@
 .header-titles {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: center;
-    position: absolute;
+    /*color: #FFD700;*/
     padding-bottom: 5%;
 }
 
 .header-title{
-    margin: 0 0 0 0;
     font-size: 100px;
+    /*color: #FFD700;*/
 }
 
 .header-subtitle {
     font-size: 20px;
     height: 20px;
     margin: 0 0 0 0;
-    border-right: 2px solid black;
+    border-right: 2px solid white;
     animation: blink-caret .75s step-end infinite;
 }
 
 @keyframes blink-caret {
     from, to { border-color: transparent; }
-    50% { border-color: black; }
+    50% { border-color: white; }
 }
+
+
+.scene {
+    width: 200px;
+    height: 200px;
+    perspective: 400px;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
