@@ -48,7 +48,7 @@ class ParticleSystem {
   private WIDTH: number
   private HEIGHT: number
   private readonly orbitControls?: OrbitControls
-  private stats?: Stats
+  private readonly stats?: Stats
   /** 主要表演场景对象 */
   public scene?: THREE.Scene
   /** 主要相机对象 */
@@ -255,7 +255,7 @@ class ParticleSystem {
       if (typeof i.path === 'string') {
         if (i.loader != null) {
           const { loaderInstance, load } = i.loader
-          loaderInstance.load(i.path, (args) => {
+          loaderInstance.load(i.path, (args: any) => {
             finalGeometry = load(args)
             finishLoad()
           })
