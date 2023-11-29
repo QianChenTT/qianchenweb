@@ -112,13 +112,14 @@ const HouseKeeper = () => {
   return (
     <>
       <div>
-        <div>{responseMessage}</div>
+        <p style={{maxWidth: "300px"}}>{responseMessage}</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="request-input"
             onChange={handleInputChange}
             value={userInput}
+            style={{color: "black"}}
           />
         </form>
       </div>

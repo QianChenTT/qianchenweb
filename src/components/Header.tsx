@@ -68,9 +68,6 @@ const Header = () => {
       <Container className="header p-0" fluid>
         {/*<img src={backgroundImage} alt="" className="header-image"/>*/}
         {/*<Cube/>*/}
-
-
-
         <Container className="header-titles" fluid>
           <h1 className="header-title"> Han </h1>
           <h2 className="header-subtitle"> {"~ han$ " + displayText} </h2>
