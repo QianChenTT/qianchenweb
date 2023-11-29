@@ -4,7 +4,6 @@ import Header from "./Header.tsx"
 import Body from "./Body.tsx"
 import IndexPage from "../pages/IndexPage";
 
-import Meme from "./Meme.tsx";
 
 function App() {
   return (
