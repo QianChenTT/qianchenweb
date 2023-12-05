@@ -43,7 +43,7 @@ function App() {
   };
 
   // Scroll event listener
-  const handleWheel = (event) => {
+  const handleWheel = (event: WheelEvent) => {
     event.preventDefault();
     const scrollDown = event.deltaY > 0;
     pageHandler(scrollDown);

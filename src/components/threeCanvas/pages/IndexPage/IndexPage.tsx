@@ -15,21 +15,21 @@ import * as THREE from 'three'
 function IndexPage(props: { name: string, time: number }) {
   const wrapper = useRef<HTMLDivElement | null>(null)
   const mainParticleRef = useRef<ParticleSystem | null>(null);
-  const MainParticle: ParticleSystem | null = null
+  // const MainParticle: ParticleSystem | null = null
 
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
 
   const tween2 = new Tween.Tween(TurnBasicNum).easing(Tween.Easing.Exponential.In)
   const tween1 = new Tween.Tween(TurnBasicNum).easing(Tween.Easing.Exponential.In)
-  const shaking = (Point) => {
+  const shaking = (Point: any) => {
     Point.rotation.x += Math.random() * 0.005 - 0.0025;
     Point.rotation.y += Math.random() * 0.005 - 0.0025;
     Point.rotation.z += Math.random() * 0.005 - 0.0025;
   };
 
   // Function to update the position and rotation to a new random state
-  const updateParticle = (particle, duration = 500) => {
+  const updateParticle = (particle: any, duration = 500) => {
     const newPosition = {
       x: (Math.random() - 0.5) * 100, // Adjust range as needed
       y: (Math.random() - 0.5) * 100, // Adjust range as needed
@@ -200,12 +200,12 @@ function IndexPage(props: { name: string, time: number }) {
       }
     }
   ]
-  // @ts-expect-error
-  window.changeModel = (name: string) => {
-    if (MainParticle != null) {
-      MainParticle.ChangeModel(name)
-    }
-  }
+
+  // window.changeModel = (name: string) => {
+  //   if (MainParticle != null) {
+  //     MainParticle.ChangeModel(name)
+  //   }
+  // }
 
   useEffect(() => {
     if (!mainParticleRef.current && wrapper.current) {
