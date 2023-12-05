@@ -1,39 +1,60 @@
 import * as React from 'react'
 import Container from 'react-bootstrap/Container'
-import Styles from './index.module.scss'
+// import Styles from './index.module.scss'
 import ParticleSystem from '../../THREE'
 import { useEffect, useRef } from 'react'
-import AtmosphereParticle from '../../THREE/atmosphere'
+import AtmosphereParticle from '../../THREE/atmosphere.ts'
 import { ParticleModelProps } from '../../declare/THREE'
 import Tween from '@tweenjs/tween.js'
-import GetFlatGeometry from '../../utils/GetFlatGeometry'
+import GetFlatGeometry from '../../utils/GetFlatGeometry.ts'
 import { BufferGeometry, Float32BufferAttribute } from 'three'
-import VerticesDuplicateRemove from '../../utils/VerticesDuplicateRemove'
+import VerticesDuplicateRemove from '../../utils/VerticesDuplicateRemove.ts'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import * as THREE from 'three'
 
-function IndexPage() {
+function IndexPage(props: { name: string, time: number }) {
   const wrapper = useRef<HTMLDivElement | null>(null)
-  let MainParticle: ParticleSystem | null = null
+  const mainParticleRef = useRef<ParticleSystem | null>(null);
+  const MainParticle: ParticleSystem | null = null
 
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
 
   const tween2 = new Tween.Tween(TurnBasicNum).easing(Tween.Easing.Exponential.In)
   const tween1 = new Tween.Tween(TurnBasicNum).easing(Tween.Easing.Exponential.In)
+  const shaking = (Point) => {
+    Point.rotation.x += Math.random() * 0.005 - 0.0025;
+    Point.rotation.y += Math.random() * 0.005 - 0.0025;
+    Point.rotation.z += Math.random() * 0.005 - 0.0025;
+  };
+
+  // Function to update the position and rotation to a new random state
+  const updateParticle = (particle, duration = 500) => {
+    const newPosition = {
+      x: (Math.random() - 0.5) * 100, // Adjust range as needed
+      y: (Math.random() - 0.5) * 100, // Adjust range as needed
+      z: (Math.random() - 0.5) * 100, // Adjust range as needed
+    };
+
+    new Tween.Tween(particle.position)
+    .to(newPosition, duration)
+    .easing(Tween.Easing.Quadratic.InOut)
+    .start();
+  };
 
   const Atomsphere1 = new AtmosphereParticle({
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      Point.rotation.x -= TurnBasicNum.firefly
+      updateParticle(Point);
     },
     callback: (Point) => {
       Point.position.z = al
     },
     onChangeModel: () => {
       tween2.stop()
-      tween1.stop().to({ firefly: 0.04 }, 1500).chain(tween2)
-      tween2.to({ firefly: 0.002 }, 1500)
+      tween1.stop().to({ firefly: 0.04 }, 500).chain(tween2)
+      tween2.to({ firefly: 0.002 }, 500)
       tween1.start()
     }
   })
@@ -41,7 +62,9 @@ function IndexPage() {
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      Point.rotation.y += TurnBasicNum.firefly
+      // Point.rotation.y += TurnBasicNum.firefly
+      updateParticle(Point);
+
     },
     callback: (Point) => {
       Point.position.y = -0.2 * al
@@ -52,7 +75,10 @@ function IndexPage() {
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      Point.rotation.z += TurnBasicNum.firefly / 2
+      // console.log(Point)
+      // Point.rotation.z += TurnBasicNum.firefly / 2
+      updateParticle(Point);
+
     },
     callback: (Point) => {
       Point.position.z = -1 * al
@@ -118,11 +144,23 @@ function IndexPage() {
         Geometry.scale(400, 400, 400)
         Geometry.translate(0, -1300, -3000)
       },
-      onEnterStart(PointGeometry) {
-        console.log('ball enter start')
-      },
-      onEnterEnd(PointGeometry) {
-        console.log('ball enter end')
+      onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
+        const p = PerfromPoint.geometry.getAttribute('position')
+        TweenList.forEach((val, i) => {
+          if (val.isPlaying === false) {
+            const x = p.getX(i) // Get the x-coordinate
+            const z = p.getZ(i) + 3000
+            // Calculate the new Y-coordinate using the provided function
+            const distance = Math.sqrt(x * x + z * z)
+            if (distance > 2000) {
+              const newY = 0.5 * (Math.abs((distance + Q) / 2) * Math.sin(Math.abs((distance + Q) / 2)) / 10)
+              p.setY(i, newY)
+            }
+          }
+        })
+        Q += 0.02
+        PerfromPoint.geometry.attributes.position.needsUpdate = true // Mark the position attribute for update
+        return true
       }
     },
     {
@@ -133,12 +171,6 @@ function IndexPage() {
         Geometry.rotateX(45)
         Geometry.rotateZ(-30)
         Geometry.translate(0, 100, 300)
-      },
-      onEnterStart(PointGeometry) {
-        console.log('ball enter start')
-      },
-      onEnterEnd(PointGeometry) {
-        console.log('ball enter end')
       }
     },
     {
@@ -154,6 +186,10 @@ function IndexPage() {
         Q += 0.08
         return true
       }
+    },
+    {
+      name: 'plane',
+      geometry: GetFlatGeometry()
     },
     {
       name: 'cone',
@@ -172,32 +208,38 @@ function IndexPage() {
   }
 
   useEffect(() => {
-    if ((MainParticle == null) && wrapper.current != null) {
-      MainParticle = new ParticleSystem({
+    if (!mainParticleRef.current && wrapper.current) {
+      // Initialize the ParticleSystem only once
+      mainParticleRef.current = new ParticleSystem({
         CanvasWrapper: wrapper.current,
         Models,
         addons: [Atomsphere1, Atomsphere2, Atomsphere3],
         onModelsFinishedLoad: (point) => {
-          MainParticle?.ListenMouseMove()
+          mainParticleRef.current?.ListenMouseMove();
         }
-      })
+      });
     }
-  })
+
+    const timeoutId = setTimeout(() => {
+      handleModelChange(props.name);
+    }, props.time);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  useEffect(() => {
+    handleModelChange(props.name);
+  }, [props.name]);
+
+  const handleModelChange = (modelName: string) => {
+    if (mainParticleRef.current) {
+      mainParticleRef.current.ChangeModel(modelName, 500);
+    }
+  };
 
   return (
-    <>
-      <div className={Styles.canvas_wrapper} ref={wrapper}></div>
-      <ul className={Styles.list}>
-        {
-          Models.map((val) => {
-            return (
-              <li key={val.name} onClick={() => MainParticle?.ChangeModel(val.name)}>{val.name}</li>
-            )
-          })
-        }
-      </ul>
-    </>
-  )
+    <Container className="canvas_wrapper p-0" ref={wrapper} fluid></Container>
+  );
 }
 
-export default IndexPage
+export default IndexPage;

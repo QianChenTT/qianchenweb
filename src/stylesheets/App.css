@@ -1,0 +1,33 @@
+.Window {
+    background: black;
+}
+
+.IndexPage {
+    position: fixed;
+    z-index: 1;
+}
+
+.Header {
+    position: relative;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.HouseKeeper {
+    position: relative;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.Body {
+    position: relative;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+
+.hidden {
+    display: none;
+}

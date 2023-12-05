@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import g from '../assets/images/gradient.png'
+import g from '../../../../public/assets/gradient.png'
 
 export default function GetFlatGeometry() {
   const AMOUNTX = 60

@@ -25,6 +25,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
+    "react-scroll-motion": "^0.3.2",
     "three": "^0.158.0",
     "three-prwm-loader": "^1.1.1"
   },

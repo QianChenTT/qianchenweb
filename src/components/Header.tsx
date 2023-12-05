@@ -1,34 +1,32 @@
-import React, {SelectHTMLAttributes} from 'react'
+import React, { SelectHTMLAttributes } from 'react'
 import HouseKeeper from './HouseKeeper.tsx'
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Container from 'react-bootstrap/Container'
-import backgroundImage from "../../public/assets/backgorund-img.png"
+import backgroundImage from '../../public/assets/backgorund-img.png'
 import '../stylesheets/Header.css'
 
-
 const Header = () => {
-  //subtitle typing effect starts here
+  // subtitle typing effect starts here
   const [displayText, setDisplayText] = React.useState('');
   const [subtitleIndex, setSubtitleIndex] = React.useState(0);
   const [charIndex, setCharIndex] = React.useState(0);
 
   const subtitles = [
-    "Computer Engineering",
-    "University Of Waterloo",
-    "Cyber Security"
+    'Computer Engineering',
+    'University Of Waterloo',
+    'Cyber Security'
   ];
 
-
-  //subtitle typing effect starts here
+  // subtitle typing effect starts here
 
   const baseTypingSpeed = 100;
 
   React.useEffect(() => {
     const currentDisplay = subtitles[subtitleIndex];
-    const printTimeouts: (NodeJS.Timeout | undefined)[] = [];
+    const printTimeouts: Array<NodeJS.Timeout | undefined> = [];
 
     for (let i = 0; i < currentDisplay.length; i++) {
       const typeDisplay = setTimeout(() => {
@@ -61,16 +59,16 @@ const Header = () => {
     }
   }, [subtitleIndex]);
 
-  //subtitle typing effect ends here
+  // subtitle typing effect ends here
 
   return (
     <>
       <Container className="header p-0" fluid>
-        {/*<img src={backgroundImage} alt="" className="header-image"/>*/}
-        {/*<Cube/>*/}
+        {/* <img src={backgroundImage} alt="" className="header-image"/> */}
+        {/* <Cube/> */}
         <Container className="header-titles" fluid>
           <h1 className="header-title"> Han </h1>
-          <h2 className="header-subtitle"> {"~ han$ " + displayText} </h2>
+          <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2>
         </Container>
       </Container>
     </>
@@ -79,26 +77,13 @@ const Header = () => {
 
 export default Header;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Meme Generator Header
-{/*<img src="/assets/brand-logo.png" alt="" className="header-brand-logo"/>*/
+// Meme Generator Header
+{ /* <img src="/assets/brand-logo.png" alt="" className="header-brand-logo"/> */
 }
-{/*<div className="header-text">Meme Generator</div>*/
+{ /* <div className="header-text">Meme Generator</div> */
 }
 
-//prev version subtitle
+// prev version subtitle
 // React.useEffect(() => {
 //   // Typing effect for each subtitle
 //   if (charIndex < subtitles[subtitleIndex].length) {

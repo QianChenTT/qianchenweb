@@ -1,4 +1,6 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+
 
 const HouseKeeper = () => {
   const [userInput, setUserInput] = React.useState('');
@@ -111,8 +113,8 @@ const HouseKeeper = () => {
 
   return (
     <>
-      <div>
-        <p style={{maxWidth: "300px"}}>{responseMessage}</p>
+      <Container className="p-0" fluid>
+        {/*<p>{responseMessage}</p>*/}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -122,7 +124,8 @@ const HouseKeeper = () => {
             style={{color: "black"}}
           />
         </form>
-      </div>
+        <h3>{responseMessage}</h3>
+      </Container>
     </>
   );
 };

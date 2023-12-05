@@ -14,11 +14,11 @@ import type { Group as TweenGroup } from '@tweenjs/tween.js'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { throttle } from 'lodash'
 
-import g from '../assets/images/gradient.png'
+import g from '../../../../public/assets/gradient.png'
 import { ParticleModelProps, TWEEN_POINT } from '../declare/THREE'
-import VerticesDuplicateRemove from '../utils/VerticesDuplicateRemove.js'
-import BuiltinShaderAttributeName from '../constant/THREE/BuiltinShaderAttributeName'
-import { addonsBasic } from '../declare/THREE/addons'
+import VerticesDuplicateRemove from '../utils/VerticesDuplicateRemove.ts'
+import BuiltinShaderAttributeName from '../constant/THREE/BuiltinShaderAttributeName.ts'
+import { addonsBasic } from '../declare/THREE/addons.ts'
 
 function getRangeRandom(e: number, t: number) {
   return Math.random() * (t - e) + e
@@ -157,14 +157,15 @@ class ParticleSystem {
     // 创建渲染器
     this.renderer = new THREE.WebGLRenderer({
       // 在 css 中设置背景色透明显示渐变色
-      alpha: true
+      alpha: true,
       // 开启抗锯齿
-      // antialias: true,
+      antialias: true
     })
     // 自动清理，解决 bloomPass 效果器冲突
     this.renderer.autoClear = false
     // 渲染背景颜色同雾化的颜色
-    this.renderer.setClearColor(this.scene.fog.color)
+    // this.renderer.setClearColor(this.scene.fog.color)
+    this.renderer.setClearColor(0x000000)
     // 定义渲染器的尺寸；在这里它会填满整个屏幕
     this.renderer.setSize(this.WIDTH, this.HEIGHT)
 
@@ -228,9 +229,9 @@ class ParticleSystem {
     TextureLoader.crossOrigin = ''
     this.PointMaterial = new THREE.PointsMaterial({
       // 粒子大小
-      size: 5,
+      size: 3,
       // false:粒子尺寸相同 ;true：取决于摄像头远近
-      sizeAttenuation: true,
+      sizeAttenuation: false,
       transparent: true,
       opacity: 1,
       blending: THREE.AdditiveBlending,

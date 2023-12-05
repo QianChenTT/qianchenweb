@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import g from '../assets/images/gradient.png'
+import g from '../../../../public/assets/gradient.png'
 import { addonsBasic } from '../declare/THREE/addons.ts'
 
 export interface AtmosphereParticleProps {
