@@ -17,6 +17,11 @@ function App() {
     switch (page) {
       case 0: return { name: 'cube', time: 1000 };
       case 1: return { name: 'ball', time: 1000 };
+      case 2: return { name: 'wave', time: 1000 };
+      case 3: return { name: 'game', time: 1000 };
+      case 4: return { name: 'cpac5', time: 1000 };
+      case 5: return { name: 'cone', time: 1000 };
+
       default: return { name: '', time: 1000 };
     }
   };

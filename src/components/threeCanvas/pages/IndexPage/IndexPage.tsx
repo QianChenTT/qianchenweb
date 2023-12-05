@@ -2,7 +2,7 @@ import * as React from 'react'
 import Container from 'react-bootstrap/Container'
 // import Styles from './index.module.scss'
 import ParticleSystem from '../../THREE'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AtmosphereParticle from '../../THREE/atmosphere.ts'
 import { ParticleModelProps } from '../../declare/THREE'
 import Tween from '@tweenjs/tween.js'
@@ -13,10 +13,11 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import * as THREE from 'three'
 
 function IndexPage(props: { name: string, time: number }) {
+  let needShake = false;
   const wrapper = useRef<HTMLDivElement | null>(null)
   const mainParticleRef = useRef<ParticleSystem | null>(null);
   // const MainParticle: ParticleSystem | null = null
-
+  console.log(needShake)
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
 
@@ -33,29 +34,34 @@ function IndexPage(props: { name: string, time: number }) {
     const newPosition = {
       x: (Math.random() - 0.5) * 100, // Adjust range as needed
       y: (Math.random() - 0.5) * 100, // Adjust range as needed
-      z: (Math.random() - 0.5) * 100, // Adjust range as needed
+      z: (Math.random() - 0.5) * 100 // Adjust range as needed
     };
 
     new Tween.Tween(particle.position)
-    .to(newPosition, duration)
-    .easing(Tween.Easing.Quadratic.InOut)
-    .start();
+      .to(newPosition, duration)
+      .easing(Tween.Easing.Quadratic.InOut)
+      .start();
   };
-
+  console.log("state of needshake at line 45 is ", needShake)
   const Atomsphere1 = new AtmosphereParticle({
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
       updateParticle(Point);
+      console.log("ran ", "shake state here is ", needShake)
+      if (needShake) {
+        console.log("shaking")
+        shaking(Point)
+      }
     },
     callback: (Point) => {
       Point.position.z = al
     },
-    onChangeModel: () => {
-      tween2.stop()
-      tween1.stop().to({ firefly: 0.04 }, 500).chain(tween2)
-      tween2.to({ firefly: 0.002 }, 500)
-      tween1.start()
+    onChangeModel: (Point) => {
+      // setNeedShake(true);
+      // console.log(needShake)
+      needShake = true;
+      setTimeout(() => { needShake = false }, 1000)
     }
   })
   const Atomsphere2 = new AtmosphereParticle({
@@ -64,11 +70,17 @@ function IndexPage(props: { name: string, time: number }) {
     renderUpdate: (Point) => {
       // Point.rotation.y += TurnBasicNum.firefly
       updateParticle(Point);
-
+      if (needShake) {
+        console.log("shaking")
+        shaking(Point)
+      }
     },
     callback: (Point) => {
       Point.position.y = -0.2 * al
       Point.position.z = -1 * al
+    },
+    onChangeModel: (Point) => {
+      shaking(Point);
     }
   })
   const Atomsphere3 = new AtmosphereParticle({
@@ -78,10 +90,18 @@ function IndexPage(props: { name: string, time: number }) {
       // console.log(Point)
       // Point.rotation.z += TurnBasicNum.firefly / 2
       updateParticle(Point);
-
+      if (needShake) {
+        console.log("shaking")
+        shaking(Point)
+      }
     },
     callback: (Point) => {
       Point.position.z = -1 * al
+    },
+    onChangeModel: (Point) => {
+      // create a timer for shaking effect
+      shaking(Point);
+      console.log('change model')
     }
   })
 
@@ -208,7 +228,7 @@ function IndexPage(props: { name: string, time: number }) {
   // }
 
   useEffect(() => {
-    if (!mainParticleRef.current && wrapper.current) {
+    if ((mainParticleRef.current == null) && (wrapper.current != null)) {
       // Initialize the ParticleSystem only once
       mainParticleRef.current = new ParticleSystem({
         CanvasWrapper: wrapper.current,
@@ -232,7 +252,7 @@ function IndexPage(props: { name: string, time: number }) {
   }, [props.name]);
 
   const handleModelChange = (modelName: string) => {
-    if (mainParticleRef.current) {
+    if (mainParticleRef.current != null) {
       mainParticleRef.current.ChangeModel(modelName, 500);
     }
   };
