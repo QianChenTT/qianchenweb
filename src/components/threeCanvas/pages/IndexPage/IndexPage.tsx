@@ -17,7 +17,7 @@ function IndexPage(props: { name: string, time: number }) {
   const wrapper = useRef<HTMLDivElement | null>(null)
   const mainParticleRef = useRef<ParticleSystem | null>(null);
   // const MainParticle: ParticleSystem | null = null
-  console.log(needShake)
+  // console.log(needShake)
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
 
@@ -42,15 +42,15 @@ function IndexPage(props: { name: string, time: number }) {
       .easing(Tween.Easing.Quadratic.InOut)
       .start();
   };
-  console.log("state of needshake at line 45 is ", needShake)
+  // console.log("state of needshake at line 45 is ", needShake)
   const Atomsphere1 = new AtmosphereParticle({
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
       updateParticle(Point);
-      console.log("ran ", "shake state here is ", needShake)
+      // console.log("ran ", "shake state here is ", needShake)
       if (needShake) {
-        console.log("shaking")
+        // console.log("shaking")
         shaking(Point)
       }
     },
@@ -71,7 +71,7 @@ function IndexPage(props: { name: string, time: number }) {
       // Point.rotation.y += TurnBasicNum.firefly
       updateParticle(Point);
       if (needShake) {
-        console.log("shaking")
+        // console.log("shaking")
         shaking(Point)
       }
     },
@@ -91,7 +91,7 @@ function IndexPage(props: { name: string, time: number }) {
       // Point.rotation.z += TurnBasicNum.firefly / 2
       updateParticle(Point);
       if (needShake) {
-        console.log("shaking")
+        // console.log("shaking")
         shaking(Point)
       }
     },
@@ -101,7 +101,7 @@ function IndexPage(props: { name: string, time: number }) {
     onChangeModel: (Point) => {
       // create a timer for shaking effect
       shaking(Point);
-      console.log('change model')
+      // console.log('change model')
     }
   })
 
@@ -137,10 +137,10 @@ function IndexPage(props: { name: string, time: number }) {
         // Geometry.translate(-600, 0, -100)
       },
       onEnterStart(PointGeometry) {
-        console.log('ball enter start')
+        // console.log('ball enter start')
       },
       onEnterEnd(PointGeometry) {
-        console.log('ball enter end')
+        // console.log('ball enter end')
       }
     },
     {
@@ -151,10 +151,10 @@ function IndexPage(props: { name: string, time: number }) {
         // Geometry.translate(-600, 0, -100)
       },
       onEnterStart(PointGeometry) {
-        console.log('ball enter start')
+        // console.log('ball enter start')
       },
       onEnterEnd(PointGeometry) {
-        console.log('ball enter end')
+        // console.log('ball enter end')
       }
     },
     {
