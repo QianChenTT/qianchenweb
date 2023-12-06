@@ -7,6 +7,16 @@
     z-index: 1;
 }
 
+.InitPopUp {
+    position: fixed;
+    z-index: 101;
+}
+
+.AudioPlayer {
+    position: relative;
+    z-index: 100;
+}
+
 .Header {
     position: relative;
     top: 20px;
@@ -30,4 +40,8 @@
 
 .hidden {
     display: none;
+}
+
+.fade {
+    transition: opacity 5s ease-in-out;
 }

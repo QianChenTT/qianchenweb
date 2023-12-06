@@ -1,0 +1,17 @@
+/* Popup.css */
+.popup {
+    align-items: center;
+    vertical-align: center;
+    background-color: rgba(0, 0, 0, 1);
+    height: 100vh;
+}
+
+.popup-content {
+    background-color: transparent; /* Transparent background for content */
+    color: white; /* White text */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Add styles for button and text as needed */
