@@ -42,6 +42,7 @@
     display: none;
 }
 
-.fade {
-    transition: opacity 5s ease-in-out;
+.InitPopUp.fade.show {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
