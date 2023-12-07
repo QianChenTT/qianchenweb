@@ -53,12 +53,10 @@ function IndexPage(props: { name: string, time: number }) {
     console.log('Animating state is now:', animating);
   }, [animating]);
 
-  // console.log("state of needshake at line 45 is ", needShake)
   const Atomsphere1 = new AtmosphereParticle({
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      console.log(animatingRef)
       if (!animatingRef.current) { // Use ref to get the current animating state
         updateParticle(Point);
         Tween.update();
@@ -68,7 +66,7 @@ function IndexPage(props: { name: string, time: number }) {
       }
     },
     callback: (Point) => {
-      Point.position.z = al
+      // Point.position.z = al
     },
     onChangeModel: (Point) => {
       needShake = true;
@@ -89,8 +87,8 @@ function IndexPage(props: { name: string, time: number }) {
       }
     },
     callback: (Point) => {
-      Point.position.y = -0.2 * al
-      Point.position.z = -1 * al
+      // Point.position.y = -0.2 * al
+      // Point.position.z = -1 * al
     },
     onChangeModel: (Point) => {
       shaking(Point);
@@ -109,7 +107,7 @@ function IndexPage(props: { name: string, time: number }) {
       }
     },
     callback: (Point) => {
-      Point.position.z = -1 * al
+      // Point.position.z = -1 * al
     },
     onChangeModel: (Point) => {
       // create a timer for shaking effect
