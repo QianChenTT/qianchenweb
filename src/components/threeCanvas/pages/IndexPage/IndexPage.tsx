@@ -16,8 +16,9 @@ function IndexPage(props: { name: string, time: number }) {
   let needShake = false;
   const wrapper = useRef<HTMLDivElement | null>(null)
   const mainParticleRef = useRef<ParticleSystem | null>(null);
-  // const MainParticle: ParticleSystem | null = null
-  // console.log(needShake)
+  const [animating, setAnimating] = useState(false);
+  const animatingRef = useRef(animating); // Ref to keep track of the current state
+
   const TurnBasicNum = { firefly: 0.002 }
   const al = 1500
 
@@ -30,27 +31,39 @@ function IndexPage(props: { name: string, time: number }) {
   };
 
   // Function to update the position and rotation to a new random state
-  const updateParticle = (particle: any, duration = 500) => {
+  const updateParticle = (particle: any, duration = 10000) => {
     const newPosition = {
-      x: (Math.random() - 0.5) * 100, // Adjust range as needed
-      y: (Math.random() - 0.5) * 100, // Adjust range as needed
-      z: (Math.random() - 0.5) * 100 // Adjust range as needed
+      x: (Math.random() - 0.5) * 200, // Adjust range as needed
+      y: (Math.random() - 0.5) * 200, // Adjust range as needed
+      z: (Math.random() - 0.5) * 200 // Adjust range as needed
     };
 
     new Tween.Tween(particle.position)
       .to(newPosition, duration)
-      .easing(Tween.Easing.Quadratic.InOut)
-      .start();
+      .easing(Tween.Easing.Linear.None)
+      .start()
+      .onStart(() => setAnimating(true))
+      .onComplete(() => {
+        console.log('Animation completed'); // Confirm onComplete execution
+        setAnimating(false);
+      });
   };
+  useEffect(() => {
+    animatingRef.current = animating; // Update the ref whenever animating changes
+    console.log('Animating state is now:', animating);
+  }, [animating]);
+
   // console.log("state of needshake at line 45 is ", needShake)
   const Atomsphere1 = new AtmosphereParticle({
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      updateParticle(Point);
-      // console.log("ran ", "shake state here is ", needShake)
+      console.log(animatingRef)
+      if (!animatingRef.current) { // Use ref to get the current animating state
+        updateParticle(Point);
+        Tween.update();
+      }
       if (needShake) {
-        // console.log("shaking")
         shaking(Point)
       }
     },
@@ -58,8 +71,6 @@ function IndexPage(props: { name: string, time: number }) {
       Point.position.z = al
     },
     onChangeModel: (Point) => {
-      // setNeedShake(true);
-      // console.log(needShake)
       needShake = true;
       setTimeout(() => { needShake = false }, 1000)
     }
@@ -68,8 +79,10 @@ function IndexPage(props: { name: string, time: number }) {
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      // Point.rotation.y += TurnBasicNum.firefly
-      updateParticle(Point);
+      if (!animatingRef.current) { // Use ref to get the current animating state
+        updateParticle(Point);
+        Tween.update();
+      }
       if (needShake) {
         // console.log("shaking")
         shaking(Point)
@@ -87,11 +100,11 @@ function IndexPage(props: { name: string, time: number }) {
     longestDistance: al,
     particleSum: 600,
     renderUpdate: (Point) => {
-      // console.log(Point)
-      // Point.rotation.z += TurnBasicNum.firefly / 2
-      updateParticle(Point);
+      if (!animatingRef.current) { // Use ref to get the current animating state
+        updateParticle(Point);
+        Tween.update();
+      }
       if (needShake) {
-        // console.log("shaking")
         shaking(Point)
       }
     },
@@ -132,6 +145,20 @@ function IndexPage(props: { name: string, time: number }) {
     {
       name: 'ball',
       path: new URL('../../THREE/models/examples/ball.obj', import.meta.url).href,
+      onLoadComplete(Geometry) {
+        Geometry.scale(scaleNum, scaleNum, scaleNum)
+        // Geometry.translate(-600, 0, -100)
+      },
+      onEnterStart(PointGeometry) {
+        // console.log('ball enter start')
+      },
+      onEnterEnd(PointGeometry) {
+        // console.log('ball enter end')
+      }
+    },
+    {
+      name: 'headphone',
+      path: new URL('../../THREE/models/examples/headphone.obj', import.meta.url).href,
       onLoadComplete(Geometry) {
         Geometry.scale(scaleNum, scaleNum, scaleNum)
         // Geometry.translate(-600, 0, -100)

@@ -14,4 +14,12 @@
     text-align: center;
 }
 
-/* Add styles for button and text as needed */
+.enable-audio {
+    background-image: url("/public/assets/headphone.png");
+    background-size: cover;
+    background-position: center;
+    width: 256px;
+    height: 256px;
+    border: none;
+    cursor: pointer;
+}

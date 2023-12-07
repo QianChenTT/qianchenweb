@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Fade } from 'react-bootstrap';
+import { motion, AnimatePresence } from 'framer-motion';
 import '../stylesheets/App.css';
 import Header from './Header.tsx';
 import Body from './Body.tsx';
@@ -12,13 +12,15 @@ import InitPopUp from './InitPopUp.tsx';
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [scrollReady, setScrollReady] = useState(true);
-  const [playPause, setPlaypause] = useState(false)
+  const [playPause, setPlayPause] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const totalPages = 5;
   const fadeInOut = {
     initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 2, delay: 0 } },
-    exit: { opacity: 0, transition: { duration: 0.5 } }
+    fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } }, // First animation
+    slowAnimation: { opacity: 1, transition: { duration: 1.5, delay: 0 } }, // Second animation
+    slowExit: { opacity: 0, transition: { duration: 1.5, delay: 0 } },
+    fastExit: { opacity: 0, transition: { duration: 0, delay: 0 } }
   };
 
   // Determine the model based on currentPage
@@ -64,7 +66,7 @@ function App() {
   };
 
   const handleEnableAudio = () => {
-    setPlaypause(true)
+    setPlayPause(true)
     handleClosePopup()
   };
 
@@ -72,43 +74,56 @@ function App() {
     setShowPopup(false);
   };
 
+  // effect for scrolling
   useEffect(() => {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
   }, [scrollReady]);
 
+  // effect for popup
   useEffect(() => {
-    setShowPopup(true)
+    const s = setTimeout(() => { setShowPopup(true) }, 1000)
+    return () => { clearTimeout(s) }
   }, []);
 
   console.log(currentPage);
   return (
     <Container className="Window p-0" fluid>
-      <Fade in={showPopup}>
-        <Container className="InitPopUp p-0" fluid>
-          <InitPopUp onEnableAudio={handleEnableAudio} onClose={handleClosePopup} />
-        </Container>
-      </Fade>
+      <AnimatePresence>
+        {showPopup && (
+          <Container className="InitPopUp p-0" fluid key="initPopup">
+            <motion.div variants={fadeInOut} initial="initial" animate="slowAnimation" exit="slowExit">
+              <InitPopUp onEnableAudio={handleEnableAudio} onClose={handleClosePopup} />
+            </motion.div>
+          </Container>
+        )}
+      </AnimatePresence>
 
       <Container className="IndexPage p-0" fluid>
-        <IndexPage name={model.name} time={model.time}/>
+        <IndexPage name={model.name} time={model.time} />
       </Container>
       <Container className="AudioPlayer p-0 hidden" fluid>
-        <AudioPlayer playPause={playPause}/>
+        <AudioPlayer playPause={playPause} />
       </Container>
 
-      <Fade in={currentPage === 0}>
-        <Container className={`Header p-0 ${currentPage === 0 ? '' : 'hidden'}`} fluid>
-          <Header />
-        </Container>
-      </Fade>
+      <AnimatePresence>
+        {currentPage === 0 && (
+          <Container className="Header p-0" fluid key="header">
+            <motion.div variants={fadeInOut} initial="initial" animate="fastAnimation" exit="fastExit">
+              <Header />
+            </motion.div>
+          </Container>
+        )}
 
-      <Fade in={currentPage === 1}>
-        <Container className={`HouseKeeper p-0 ${currentPage === 1 ? '' : 'hidden'}`} fluid>
-          <HouseKeeper />
-        </Container>
-      </Fade>
-      {/* Add Fade containers for other pages */}
+        {currentPage === 1 && (
+          <Container className="HouseKeeper p-0" fluid key="housekeeper">
+            <motion.div variants={fadeInOut} initial="initial" animate="fastAnimation" exit="fastExit">
+              <HouseKeeper />
+            </motion.div>
+          </Container>
+        )}
+      </AnimatePresence>
+      {/* Add motion.div containers for other pages with fade-in effect */}
     </Container>
   );
 }
