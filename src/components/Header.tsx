@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import Container from 'react-bootstrap/Container'
 import backgroundImage from '../../public/assets/backgorund-img.png'
 import '../stylesheets/Header.css'
+import { InfoParticle } from './InfoParticle.tsx';
 
 const Header = () => {
   // subtitle typing effect starts here
@@ -61,15 +62,17 @@ const Header = () => {
 
   // subtitle typing effect ends here
 
+  const handleClick = (key: number) => {
+    console.log(key)
+  }
   return (
     <>
       <Container className="header p-0" fluid>
-        {/* <img src={backgroundImage} alt="" className="header-image"/> */}
-        {/* <Cube/> */}
         <Container className="header-titles" fluid>
           <h1 className="header-title"> Han </h1>
           <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2>
         </Container>
+        <InfoParticle keyV={1} onClick={handleClick}/>
       </Container>
     </>
   )
