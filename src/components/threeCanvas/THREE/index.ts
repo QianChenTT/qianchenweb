@@ -349,7 +349,6 @@ class ParticleSystem {
    */
   ChangeModel(name: string, time: number = this.AnimateDuration) {
     const item = this.modelList.get(name)
-
     if (item == null) {
       console.warn('未找到指定名字的模型，改变操作已终止！传入的名字：' + name.toString())
       return
@@ -358,6 +357,7 @@ class ParticleSystem {
     if (this.CurrentUseModelName !== undefined) this.LastUseModelName = this.CurrentUseModelName
     this.CurrentUseModelName = name
     /** 模型切换开始的钩子 */
+    // console.log(this.AnimateEffectParticle)
     itemHook!.onEnterStart?.call(this, this.AnimateEffectParticle!)
     const targetModel = item.getAttribute('position')
     // !使用断言

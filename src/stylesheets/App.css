@@ -17,6 +17,11 @@
     z-index: 100;
 }
 
+.test-info-particle {
+    position: relative;
+    z-index: 100;
+}
+
 .Header {
     position: relative;
     top: 20px;

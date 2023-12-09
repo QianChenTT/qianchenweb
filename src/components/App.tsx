@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef, useMemo} from 'react';
 import Container from 'react-bootstrap/Container';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../stylesheets/App.css';
@@ -15,18 +15,18 @@ function App() {
   const [playPause, setPlayPause] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const totalPages = 5;
-  const fadeInOut = {
+  const fadeInOut = useMemo(() => ({
     initial: { opacity: 0 },
-    fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } }, // First animation
-    slowAnimation: { opacity: 1, transition: { duration: 1.5, delay: 0 } }, // Second animation
+    fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } },
+    slowAnimation: { opacity: 1, transition: { duration: 1.5, delay: 0 } },
     slowExit: { opacity: 0, transition: { duration: 1.5, delay: 0 } },
     fastExit: { opacity: 0, transition: { duration: 0, delay: 0 } }
-  };
+  }), []);
 
   // Determine the model based on currentPage
   const getModelForPage = (page: number) => {
     switch (page) {
-      case 0: return { name: 'cube', time: 1000 };
+      case 0: return { name: 'wave', time: 1000 };
       case 1: return { name: 'ball', time: 1000 };
       case 2: return { name: 'wave', time: 1000 };
       case 3: return { name: 'game', time: 1000 };
@@ -57,7 +57,6 @@ function App() {
       }
     }
   };
-
   // Scroll event listener
   const handleWheel = (event: WheelEvent) => {
     event.preventDefault();
@@ -85,7 +84,6 @@ function App() {
     const s = setTimeout(() => { setShowPopup(true) }, 1000)
     return () => { clearTimeout(s) }
   }, []);
-
   console.log(currentPage);
   return (
     <Container className="Window p-0" fluid>
@@ -123,7 +121,6 @@ function App() {
           </Container>
         )}
       </AnimatePresence>
-      {/* Add motion.div containers for other pages with fade-in effect */}
     </Container>
   );
 }
