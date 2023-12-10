@@ -26,7 +26,7 @@ function App() {
   // Determine the model based on currentPage
   const getModelForPage = (page: number) => {
     switch (page) {
-      case 0: return { name: 'wave', time: 1000 };
+      case 0: return { name: 'sampleFunction', time: 1000 };
       case 1: return { name: 'ball', time: 1000 };
       case 2: return { name: 'wave', time: 1000 };
       case 3: return { name: 'game', time: 1000 };

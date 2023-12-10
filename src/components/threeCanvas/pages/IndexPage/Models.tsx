@@ -1,6 +1,7 @@
 import { ParticleModelProps } from '../../declare/THREE';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import GetFlatGeometry from '../../utils/GetFlatGeometry.ts';
+import {audioFrequency, flatGeometry, quadratic, waterGeometry} from '../../utils/GetFlatGeometry.ts';
+import { gamma } from 'mathjs';
 import VerticesDuplicateRemove from '../../utils/VerticesDuplicateRemove.ts';
 import * as THREE from 'three';
 import { BufferGeometry, Float32BufferAttribute } from 'three';
@@ -87,12 +88,12 @@ export const Models: ParticleModelProps[] = [
   },
   {
     name: 'wave',
-    geometry: GetFlatGeometry(),
+    geometry: flatGeometry.createGeometry(),
     onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
       const p = PerfromPoint.geometry.getAttribute('position');
       TweenList.forEach((val, i) => {
         if (val.isPlaying === false) {
-          p.setY(i, Math.sin((i + 1 + Q) * 0.3) * 50 + Math.sin((i + Q) * 0.5) * 50 - 500);
+          p.setY(i, Math.sin((i + 1 + Q) * 0.3) * 50 + Math.sin((i + Q) * 0.5) * 50 - 200);
         }
       });
       Q += 0.08;
@@ -100,8 +101,22 @@ export const Models: ParticleModelProps[] = [
     }
   },
   {
-    name: 'plane',
-    geometry: GetFlatGeometry()
+    name: 'sampleFunction',
+    geometry: audioFrequency.createGeometry(),
+    onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
+      const p = PerfromPoint.geometry.getAttribute('position');
+      TweenList.forEach((val, i) => {
+        const x = p.getX(i);
+        if (val.isPlaying === false) {
+          p.setY(i, x * Math.sin(Math.tan(Math.log(gamma(Q) * Math.pow(x, 2)))) * Math.cos(x));
+        }
+      });
+      Q += 0.0002;
+      if (Q > 2) {
+        Q = 0.0002;
+      }
+      return true;
+    }
   },
   {
     name: 'cone',
