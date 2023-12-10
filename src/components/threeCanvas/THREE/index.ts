@@ -231,7 +231,7 @@ class ParticleSystem {
       // 粒子大小
       size: 3,
       // false:粒子尺寸相同 ;true：取决于摄像头远近
-      sizeAttenuation: false,
+      sizeAttenuation: true,
       transparent: true,
       opacity: 1,
       blending: THREE.AdditiveBlending,
