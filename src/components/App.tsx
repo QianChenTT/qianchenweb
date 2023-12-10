@@ -85,6 +85,7 @@ function App() {
     return () => { clearTimeout(s) }
   }, []);
   console.log(currentPage);
+  console.log(getModelForPage(currentPage))
   return (
     <Container className="Window p-0" fluid>
       <AnimatePresence>
