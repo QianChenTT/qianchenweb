@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import g from '../../../../public/assets/gradient.png';
 
-export class CustomGeometry {
+class CustomGeometry {
   numParticles: number;
   initPositionFunc: (vertices: Float32Array, index: number) => void;
   geometry: THREE.BufferGeometry;
