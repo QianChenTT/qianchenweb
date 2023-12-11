@@ -1,0 +1,71 @@
+.housekeeper-open {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background-color: black;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.container.chatbot {
+    position: relative;
+    margin-top: 5%;
+    /*background-color: white;*/
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /*background-color: #f8f8f8; !* Light background for the input area *!*/
+}
+
+.input-field {
+    flex-grow: 1;
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: white;
+    color: black;
+    border: 2px solid #e0e0e0; /* Subtle border for the input field */
+    border-radius: 100px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.1); /* Highlight color on focus */
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3); /* Matching shadow color */
+}
+
+.send-button {
+    padding: 8px 16px;
+    background-color: #007bff; /* Vibrant send button color */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.send-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+
+.housekeeper-closed {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+    height: auto;
+}
+
+.open-button {
+    height: 50px;
+    width: 50px;
+}

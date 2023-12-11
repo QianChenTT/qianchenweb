@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useRef, useMemo} from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../stylesheets/App.css';
 import Header from './Header.tsx';
 import Body from './Body.tsx';
-import HouseKeeper from './HouseKeeper.tsx';
+import HouseKeeper from './HouseKeeper/HouseKeeper.tsx';
 import IndexPage from './threeCanvas/pages/IndexPage/IndexPage.tsx';
 import AudioPlayer from './AudioPlayer.tsx'
 import InitPopUp from './InitPopUp.tsx';
@@ -14,12 +14,13 @@ function App() {
   const [scrollReady, setScrollReady] = useState(true);
   const [playPause, setPlayPause] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
+  const [houseKeeperState, setHouseKeeperState] = useState(false);
   const totalPages = 5;
   const fadeInOut = useMemo(() => ({
     initial: { opacity: 0 },
     fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } },
-    slowAnimation: { opacity: 1, transition: { duration: 1.5, delay: 0 } },
-    slowExit: { opacity: 0, transition: { duration: 1.5, delay: 0 } },
+    slowAnimation: { opacity: 1, transition: { duration: 1, delay: 0 } },
+    slowExit: { opacity: 0, transition: { duration: 1, delay: 0 } },
     fastExit: { opacity: 0, transition: { duration: 0, delay: 0 } }
   }), []);
 
@@ -104,6 +105,9 @@ function App() {
       <Container className="AudioPlayer p-0 hidden" fluid>
         <AudioPlayer playPause={playPause} />
       </Container>
+      <Container className="HouseKeeper p-0">
+        <HouseKeeper/>
+      </Container>
 
       <AnimatePresence>
         {currentPage === 0 && (
@@ -115,9 +119,8 @@ function App() {
         )}
 
         {currentPage === 1 && (
-          <Container className="HouseKeeper p-0" fluid key="housekeeper">
+          <Container className=" p-0" fluid key="housekeeper">
             <motion.div variants={fadeInOut} initial="initial" animate="fastAnimation" exit="fastExit">
-              <HouseKeeper />
             </motion.div>
           </Container>
         )}

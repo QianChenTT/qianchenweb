@@ -1,49 +1,45 @@
 import * as THREE from 'three';
 import g from '../../../../public/assets/gradient.png';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 class TextParticleGeometry {
-  text: string;
-  fontUrl: string;
-  numParticles: number;
-  size: number;
-  geometry: THREE.BufferGeometry;
-  constructor(text: string, fontUrl: string, numParticles: number, size = 10) {
-    this.text = text;
-    this.fontUrl = fontUrl;
-    this.numParticles = numParticles;
-    this.size = size;
+  geometry;
+  material;
+  points: any;
+  constructor(text: string, fontUrl: string, size = 10, numParticles = 10000) {
     this.geometry = new THREE.BufferGeometry();
-    this.loadFontAndCreateGeometry();
+    this.material = new THREE.PointsMaterial({ size: 0.5, color: 0xffffff });
+    this.points = null;
+    this.loadFontAndCreateGeometry(text, fontUrl, size, numParticles);
   }
 
-  loadFontAndCreateGeometry() {
+  loadFontAndCreateGeometry(text: string, fontUrl: string, size: number, numParticles: number) {
     const loader = new FontLoader();
-    loader.load(this.fontUrl, (font) => {
-      const shapes = font.generateShapes(this.text, this.size);
-      const shapeGeometry = new THREE.ShapeGeometry(shapes);
+    loader.load(fontUrl, (font) => {
+      const textGeometry = new TextGeometry(text, {
+        font: font,
+        size: size,
+        height: 0.1,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 1,
+        bevelSize: 0.5,
+        bevelOffset: 0,
+        bevelSegments: 5
+      });
 
-      shapeGeometry.computeBoundingBox();
-      shapeGeometry.center();
-
-      const vertices = [];
-      const positionAttribute = shapeGeometry.attributes.position;
-
-      for (let i = 0; i < this.numParticles; i++) {
-        // Select a random vertex from the geometry
-        const index = Math.floor(Math.random() * positionAttribute.count);
-        const vertex = new THREE.Vector3().fromBufferAttribute(positionAttribute, index);
-        vertices.push(vertex.x, vertex.y, vertex.z);
-      }
-
-      this.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      // Use the text geometry directly
+      this.points = new THREE.Points(textGeometry, this.material);
     });
   }
 
-  getGeometry() {
-    return this.geometry;
+  getPoints() {
+    return this.points;
   }
 }
+
+export default TextParticleGeometry;
 
 //
 class CustomGeometry {
