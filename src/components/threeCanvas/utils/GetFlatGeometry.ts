@@ -1,6 +1,51 @@
 import * as THREE from 'three';
 import g from '../../../../public/assets/gradient.png';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
+class TextParticleGeometry {
+  text: string;
+  fontUrl: string;
+  numParticles: number;
+  size: number;
+  geometry: THREE.BufferGeometry;
+  constructor(text: string, fontUrl: string, numParticles: number, size = 10) {
+    this.text = text;
+    this.fontUrl = fontUrl;
+    this.numParticles = numParticles;
+    this.size = size;
+    this.geometry = new THREE.BufferGeometry();
+    this.loadFontAndCreateGeometry();
+  }
+
+  loadFontAndCreateGeometry() {
+    const loader = new FontLoader();
+    loader.load(this.fontUrl, (font) => {
+      const shapes = font.generateShapes(this.text, this.size);
+      const shapeGeometry = new THREE.ShapeGeometry(shapes);
+
+      shapeGeometry.computeBoundingBox();
+      shapeGeometry.center();
+
+      const vertices = [];
+      const positionAttribute = shapeGeometry.attributes.position;
+
+      for (let i = 0; i < this.numParticles; i++) {
+        // Select a random vertex from the geometry
+        const index = Math.floor(Math.random() * positionAttribute.count);
+        const vertex = new THREE.Vector3().fromBufferAttribute(positionAttribute, index);
+        vertices.push(vertex.x, vertex.y, vertex.z);
+      }
+
+      this.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    });
+  }
+
+  getGeometry() {
+    return this.geometry;
+  }
+}
+
+//
 class CustomGeometry {
   numParticles: number;
   initPositionFunc: (vertices: Float32Array, index: number) => void;
@@ -98,3 +143,5 @@ export const audioFrequency = new CustomGeometry(
     vertices[i + 2] = 500; // z coordinate, set to 0 for 2D wave
   }
 );
+
+export const hanGeometry = new TextParticleGeometry('Han', '../../../../Roboto Black_Regular.json', 2000, 10);
