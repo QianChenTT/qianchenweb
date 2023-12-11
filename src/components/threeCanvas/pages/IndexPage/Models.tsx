@@ -1,6 +1,6 @@
 import { ParticleModelProps } from '../../declare/THREE';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { audioFrequency, flatGeometry } from '../../utils/GetFlatGeometry.ts';
+import {audioFrequency, flatGeometry, hanGeometry} from '../../utils/GetFlatGeometry.ts';
 import { gamma } from 'mathjs';
 import VerticesDuplicateRemove from '../../utils/VerticesDuplicateRemove.ts';
 import * as THREE from 'three';
