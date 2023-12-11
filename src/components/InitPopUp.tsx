@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
 import '../stylesheets/InitPopUp.css'
 
 // @ts-expect-error

@@ -1,5 +1,6 @@
 .Window {
     background: black;
+    height: 100dvh;
 }
 
 .IndexPage {
@@ -9,12 +10,19 @@
 
 .InitPopUp {
     position: fixed;
-    z-index: 101;
+    z-index: 102;
 }
 
 .AudioPlayer {
     position: relative;
     z-index: 100;
+}
+
+.HouseKeeper {
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    z-index: 101;
 }
 
 .test-info-particle {
@@ -23,13 +31,6 @@
 }
 
 .Header {
-    position: relative;
-    top: 20px;
-    left: 20px;
-    z-index: 100;
-}
-
-.HouseKeeper {
     position: relative;
     top: 20px;
     left: 20px;
@@ -45,9 +46,4 @@
 
 .hidden {
     display: none;
-}
-
-.InitPopUp.fade.show {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
 }

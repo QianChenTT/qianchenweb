@@ -1,5 +1,5 @@
 import React, { SelectHTMLAttributes } from 'react'
-import HouseKeeper from './HouseKeeper.tsx'
+import HouseKeeper from './HouseKeeper/HouseKeeper.tsx'
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
