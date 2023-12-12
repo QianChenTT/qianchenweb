@@ -1,0 +1,16 @@
+.message-bubble {
+    border-radius: 10px;
+    display: flex;
+    max-width: 80%;
+    margin: 5px 0;
+}
+
+.message-avatar {
+    width: 40px; /* Adjust the size as needed */
+    height: 40px;
+}
+
+.message-header, .message-body {
+    margin: 0;
+    padding-left: 10px;
+}

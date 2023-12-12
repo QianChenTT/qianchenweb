@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../stylesheets/HouseKeeper.css'
+import { MessageBubble } from './MessageBubble.tsx';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,6 +9,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 const HouseKeeper = () => {
   // component variable
   const [isOpen, setIsOpen] = React.useState(false);
+  const message = {
+    speaker: 'QianChen',
+    message: ''
+  };
+  const [historyMessage, setHistoryMessage] = React.useState([]);
   const chatVariants = {
     open: {
       opacity: 1,
@@ -82,8 +88,9 @@ const HouseKeeper = () => {
   const fetchThreadMessages = async (threadId: string) => {
     try {
       const messagesResponse = await httpGet(`https://y75d43vkhohk37anophz77fo5m0wpzsu.lambda-url.ca-central-1.on.aws/api/threads/${threadId}`);
-      const messages = messagesResponse.messages[0].content;
-      setResponseMessage(messages);
+      const message = messagesResponse.messages[0].content;
+      addMessage('QianChen', message);
+      // setResponseMessage(message);
     } catch (error) {
       console.error('Error in fetching thread messages:', error);
     }
@@ -129,6 +136,7 @@ const HouseKeeper = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     if (userInput !== '') {
+      addMessage('user', userInput);
       sendUserInput();
       setUserInput('');
     }
@@ -141,6 +149,21 @@ const HouseKeeper = () => {
 
   const HandleOpen = () => {
     setIsOpen(true);
+  }
+
+  const HandleScroll = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+  }
+
+  const addMessage = (speaker: string, message: string) => {
+    const newMessage = {
+      speaker: speaker,
+      message: message
+    };
+    setHistoryMessage((prev) => {
+      return [...prev, newMessage]
+    })
+    console.log(historyMessage);
   }
 
   return (
@@ -156,9 +179,14 @@ const HouseKeeper = () => {
           >
             <Container className="chatbot p-0 d-flex flex-column">
               <button onClick={HandleClose}></button>
-              <Row className="flex-grow-1">
+              <Row className="flex-grow-1" onWheel={HandleScroll} style={{ overflowY: 'auto' }}>
                 <Col>
-                  <h3>{responseMessage}</h3>
+                  <Container className="message-container">
+                    {historyMessage.map((msg) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <MessageBubble speaker={msg.speaker} message={msg.message} />
+                    ))}
+                  </Container>
                 </Col>
               </Row>
               <Row>
@@ -172,9 +200,9 @@ const HouseKeeper = () => {
                       onChange={handleInputChange}
                       value={userInput}
                     />
-                    <button type="submit" className="send-button">
-                      Send
-                    </button>
+                    {/* <button type="submit" className="send-button"> */}
+                    {/*  Send */}
+                    {/* </button> */}
                   </form>
                 </Col>
               </Row>
