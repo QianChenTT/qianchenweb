@@ -1,6 +1,6 @@
 .Window {
     background: black;
-    height: 100dvh;
+    height: 100vh;
 }
 
 .IndexPage {
@@ -20,8 +20,8 @@
 
 .HouseKeeper {
     position: fixed;
-    bottom: 20px;
-    right: 0;
+    /*bottom: 20px;*/
+    /*right: 20px;*/
     z-index: 101;
 }
 

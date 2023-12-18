@@ -77,6 +77,7 @@ const HouseKeeper = () => {
         setStatus(statusResponse.status);
         fetchThreadMessages(threadId);
       } else {
+        // setHistoryMessage((prev) => {return prev})
         setTimeout(async () => await checkRunStatus(threadId, runId), 2000);
       }
     } catch (error) {
@@ -166,50 +167,50 @@ const HouseKeeper = () => {
     console.log(historyMessage);
   }
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="housekeeper-open"
-            variants={chatVariants}
-            initial="closed"
-            animate="open"
-            exit="exit"
-          >
-            <Container className="chatbot p-0 d-flex flex-column">
-              <button onClick={HandleClose}></button>
-              <Row className="flex-grow-1" onWheel={HandleScroll} style={{ overflowY: 'auto' }}>
-                <Col>
-                  <Container className="message-container">
-                    {historyMessage.map((msg) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <MessageBubble speaker={msg.speaker} message={msg.message} />
-                    ))}
-                  </Container>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <form onSubmit={handleSubmit} className="d-flex input-area">
-                    <input
-                      type="text"
-                      name="request-input"
-                      placeholder="Type your message here..."
-                      className="flex-grow-1 input-field"
-                      onChange={handleInputChange}
-                      value={userInput}
-                    />
-                    {/* <button type="submit" className="send-button"> */}
-                    {/*  Send */}
-                    {/* </button> */}
-                  </form>
-                </Col>
-              </Row>
-            </Container>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Container className="p-0" fluid>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="housekeeper-open"
+              variants={chatVariants}
+              initial="closed"
+              animate="open"
+              exit="exit"
+            >
+              <Container className="chatbot p-0 d-flex flex-column">
+                <button onClick={HandleClose}></button>
+                <Row className="flex-grow-1" onWheel={HandleScroll} style={{ overflowY: 'auto' }}>
+                  <Col>
+                    <Container className="message-container">
+                      {historyMessage.map((msg) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <MessageBubble speaker={msg.speaker} message={msg.message} />
+                      ))}
+                    </Container>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <form onSubmit={handleSubmit} className="d-flex input-area">
+                      <input
+                        type="text"
+                        name="request-input"
+                        placeholder="Type your message here..."
+                        className="flex-grow-1 input-field"
+                        onChange={handleInputChange}
+                        value={userInput}
+                      />
+                    </form>
+                  </Col>
+                </Row>
+              </Container>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.div
           variants={buttonVariants}
@@ -219,6 +220,7 @@ const HouseKeeper = () => {
         >
           <button onClick={HandleOpen} className="open-button" >Open Chat</button>
         </motion.div>
+      </Container>
     </>
   )
 };

@@ -37,7 +37,7 @@ function IndexPage({ name, time }: { name: string, time: number }) {
   };
 
   return (
-    <Container className="canvas_wrapper p-0" ref={wrapper} fluid></Container>
+    <Container className="p-0" ref={wrapper} fluid></Container>
   );
 }
 
