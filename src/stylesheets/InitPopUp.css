@@ -1,4 +1,11 @@
-/* Popup.css */
+/* Preload the image */
+@font-face {
+    font-family: 'preload-headphone';
+    src: url('/public/assets/headphone.png');
+    font-display: block;
+}
+
+
 .popup {
     display: flex;
     align-items: center;
@@ -9,14 +16,15 @@
 }
 
 .popup-content {
-    background-color: transparent; /* Transparent background for content */
-    color: white; /* White text */
+    background-color: transparent;
+    color: white;
     padding: 20px;
     border-radius: 5px;
     text-align: center;
 }
 
 .enable-audio {
+    background-color: black;
     background-image: url("/public/assets/headphone.png");
     background-size: cover;
     background-position: center;

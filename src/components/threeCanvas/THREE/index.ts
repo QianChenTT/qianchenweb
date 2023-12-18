@@ -120,8 +120,8 @@ class ParticleSystem {
     // 效果器
     this.createEffect()
     // 轨道控制插件（鼠标拖拽视角、缩放等）
-    this.orbitControls = new OrbitControls(this.camera!, this.renderer!.domElement)
-    this.orbitControls.enableZoom = false
+    // this.orbitControls = new OrbitControls(this.camera!, this.renderer!.domElement)
+    // this.orbitControls.enableZoom = false
     this.mouseK = 0
     this.mouseV = 0
     // 循环更新渲染场景
@@ -209,7 +209,7 @@ class ParticleSystem {
   private createEffect() {
     this.composer = new EffectComposer(this.renderer!)
     const renderPass = new RenderPass(this.scene!, this.camera!)
-    const bloomPass = new BloomPass(0.75)
+    const bloomPass = new BloomPass(0.5)
     const filmPass = new FilmPass(0.5, false)
     const shaderPass = new ShaderPass(FocusShader)
     shaderPass.uniforms.screenWidth.value = window.innerWidth

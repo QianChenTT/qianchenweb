@@ -69,8 +69,12 @@ const Header = () => {
     <>
       <Container className="header p-0" fluid>
         <Container className="header-titles" fluid>
-          <h1 className="header-title"> Han </h1>
-          <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2>
+          <Row>
+            <h1 className="header-title"> Han </h1>
+          </Row>
+          <Row>
+            <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2><div className="blinking-caret"></div>
+          </Row>
         </Container>
         <InfoParticle keyV={1} onClick={handleClick}/>
       </Container>
