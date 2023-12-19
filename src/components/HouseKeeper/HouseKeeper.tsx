@@ -13,7 +13,7 @@ const HouseKeeper = () => {
     speaker: 'QianChen',
     message: ''
   };
-  const [historyMessage, setHistoryMessage] = React.useState([]);
+  const [historyMessage, setHistoryMessage] = React.useState([message]);
   const chatVariants = {
     open: {
       opacity: 1,
@@ -73,6 +73,7 @@ const HouseKeeper = () => {
   const checkRunStatus = async (threadId: string, runId: string) => {
     try {
       const statusResponse = await httpGet(`https://y75d43vkhohk37anophz77fo5m0wpzsu.lambda-url.ca-central-1.on.aws/api/threads/${threadId}/runs/${runId}`);
+      console.log(statusResponse.status)
       if (statusResponse.status === 'completed') {
         setStatus(statusResponse.status);
         fetchThreadMessages(threadId);
@@ -158,17 +159,19 @@ const HouseKeeper = () => {
 
   const addMessage = (speaker: string, message: string) => {
     const newMessage = {
-      speaker: speaker,
-      message: message
+      speaker,
+      message
     };
+    newMessage.speaker = speaker;
+    newMessage.message = message;
     setHistoryMessage((prev) => {
       return [...prev, newMessage]
     })
     console.log(historyMessage);
   }
 
-  // @ts-ignore
-  // @ts-ignore
+  // @ts-expect-error
+  // @ts-expect-error
   return (
     <>
       <Container className="p-0" fluid>
@@ -186,9 +189,9 @@ const HouseKeeper = () => {
                 <Row className="flex-grow-1" onWheel={HandleScroll} style={{ overflowY: 'auto' }}>
                   <Col>
                     <Container className="message-container">
-                      {historyMessage.map((msg) => (
+                      {historyMessage.map((msg, key) => (
                         // eslint-disable-next-line react/jsx-key
-                        <MessageBubble speaker={msg.speaker} message={msg.message} />
+                        <MessageBubble speaker={msg.speaker} message={msg.message} key={key} />
                       ))}
                     </Container>
                   </Col>
