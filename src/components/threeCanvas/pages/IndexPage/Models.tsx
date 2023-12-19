@@ -87,6 +87,16 @@ export const Models: ParticleModelProps[] = [
     }
   },
   {
+    name: 'DiamondSword',
+    path: new URL('../../THREE/models/examples/DiamondSword.obj', import.meta.url).href,
+    onLoadComplete(Geometry) {
+      Geometry.scale(30, 30, 30);
+      Geometry.rotateX(45);
+      // Geometry.rotateZ(-20);
+      Geometry.translate(0, 100, 300);
+    }
+  },
+  {
     name: 'wave',
     geometry: flatGeometry.createGeometry(),
     onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
