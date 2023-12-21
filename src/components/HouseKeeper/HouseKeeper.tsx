@@ -76,10 +76,10 @@ const HouseKeeper = () => {
       console.log(statusResponse.status)
       if (statusResponse.status === 'completed') {
         setStatus(statusResponse.status);
-        fetchThreadMessages(threadId);
+        await fetchThreadMessages(threadId);
       } else {
         // setHistoryMessage((prev) => {return prev})
-        setTimeout(async () => await checkRunStatus(threadId, runId), 2000);
+        setTimeout(() => { void checkRunStatus(threadId, runId) }, 2000);
       }
     } catch (error) {
       console.error('Error in checking run status:', error);
@@ -103,7 +103,7 @@ const HouseKeeper = () => {
     try {
       const response = await httpPost(`https://y75d43vkhohk37anophz77fo5m0wpzsu.lambda-url.ca-central-1.on.aws/api/threads/${threadId}`, { content: userInput });
       setRunId(response.run_id);
-      checkRunStatus(threadId, response.run_id);
+      await checkRunStatus(threadId, response.run_id);
     } catch (error) {
       console.error('Error in sending user input:', error);
     }
@@ -119,14 +119,14 @@ const HouseKeeper = () => {
         localStorage.setItem('run_id', newRID);
         setThreadId(newTID);
         setRunId(newRID);
-        checkRunStatus(newTID, newRID);
+        await checkRunStatus(newTID, newRID);
       } catch (error) {
         console.error('Error in initializing thread:', error);
       }
     };
 
-    if (!localStorage.getItem('thread_id') && !localStorage.getItem('run_id')) {
-      initializeThread();
+    if ((localStorage.getItem('thread_id') == null) && (localStorage.getItem('run_id') == null)) {
+      void initializeThread();
     } else {
       // @ts-expect-error checked parameter
       setThreadId(localStorage.getItem('thread_id'));
@@ -139,7 +139,7 @@ const HouseKeeper = () => {
     event.preventDefault();
     if (userInput !== '') {
       addMessage('user', userInput);
-      sendUserInput();
+      void sendUserInput();
       setUserInput('');
     }
   };
@@ -170,8 +170,6 @@ const HouseKeeper = () => {
     console.log(historyMessage);
   }
 
-  // @ts-expect-error
-  // @ts-expect-error
   return (
     <>
       <Container className="p-0" fluid>

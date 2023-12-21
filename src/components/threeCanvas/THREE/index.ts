@@ -6,6 +6,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js'
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { FocusShader } from 'three/examples/jsm/shaders/FocusShader.js'
 
 import Tween from '@tweenjs/tween.js'
@@ -209,7 +210,7 @@ class ParticleSystem {
   private createEffect() {
     this.composer = new EffectComposer(this.renderer!)
     const renderPass = new RenderPass(this.scene!, this.camera!)
-    const bloomPass = new BloomPass(0.5)
+    const bloomPass = new BloomPass(0.2)
     const filmPass = new FilmPass(0.5, false)
     const shaderPass = new ShaderPass(FocusShader)
     shaderPass.uniforms.screenWidth.value = window.innerWidth
@@ -231,7 +232,7 @@ class ParticleSystem {
       // 粒子大小
       size: 3,
       // false:粒子尺寸相同 ;true：取决于摄像头远近
-      sizeAttenuation: true,
+      sizeAttenuation: false,
       transparent: true,
       opacity: 1,
       blending: THREE.AdditiveBlending,
