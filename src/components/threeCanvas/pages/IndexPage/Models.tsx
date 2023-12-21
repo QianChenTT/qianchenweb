@@ -1,10 +1,11 @@
 import { ParticleModelProps } from '../../declare/THREE';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { audioFrequency, flatGeometry, hanGeometry } from '../../utils/GetFlatGeometry.ts';
+import { audioFrequency, flatGeometry, hanGeo } from '../../utils/GetFlatGeometry.ts';
 import { gamma } from 'mathjs';
 import VerticesDuplicateRemove from '../../utils/VerticesDuplicateRemove.ts';
 import * as THREE from 'three';
 import { BufferGeometry, Float32BufferAttribute } from 'three';
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 
 const scaleNum = 600;
 let Q = 0;
@@ -22,12 +23,21 @@ export const Models: ParticleModelProps[] = [
       load(group) {
         const g = new BufferGeometry();
         let arr = new Float32Array([]);
+        console.log(group)
         for (const i of group.children) {
           arr = new Float32Array([...arr, ...i.geometry.attributes.position.array]);
         }
         g.setAttribute('position', new Float32BufferAttribute(VerticesDuplicateRemove(arr), 3));
         return g;
       }
+    }
+  },
+  {
+    name: 'TEMPLE',
+    path: new URL('../../THREE/models/examples/TEMPLE.obj', import.meta.url).href,
+    onLoadComplete(Geometry) {
+      const s = 5000;
+      Geometry.scale(s, s, s);
     }
   },
   {
@@ -97,6 +107,13 @@ export const Models: ParticleModelProps[] = [
     }
   },
   {
+    name: 'cone',
+    path: new URL('../../THREE/models/examples/cone.obj', import.meta.url).href,
+    onLoadComplete(Geometry) {
+      Geometry.scale(scaleNum, scaleNum, scaleNum);
+    }
+  },
+  {
     name: 'wave',
     geometry: flatGeometry.createGeometry(),
     onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
@@ -129,10 +146,23 @@ export const Models: ParticleModelProps[] = [
     }
   },
   {
-    name: 'cone',
-    path: new URL('../../THREE/models/examples/cone.obj', import.meta.url).href,
-    onLoadComplete(Geometry) {
-      Geometry.scale(scaleNum, scaleNum, scaleNum);
+    name: 'hanGeo',
+    geometry: hanGeo.createGeometry(),
+    NeedRemoveDuplicateParticle: false,
+    onLoadComplete(Geo) {
+      // Geo.translate(-window.innerWidth / 2, -window.innerHeight / 2, 0)
+    },
+    onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
+      const p = PerfromPoint.geometry.getAttribute('position');
+      TweenList.forEach((val, i) => {
+        if (i > 5000) {
+          if (p.getY(i) < -10000) {
+            p.setY(i, -Q);
+          }
+        }
+      });
+      Q += 0.8;
+      return true;
     }
   }
 ];

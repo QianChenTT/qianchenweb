@@ -26,8 +26,8 @@ function App() {
   // Determine the model based on currentPage
   const getModelForPage = (page: number) => {
     switch (page) {
-      case 0: return { name: 'DiamondSword', time: 1000 };
-      case 1: return { name: 'ball', time: 1000 };
+      case 0: return { name: 'hanGeo', time: 1000 };
+      case 1: return { name: 'sampleFunction', time: 1000 };
       case 2: return { name: 'wave', time: 1000 };
       case 3: return { name: 'game', time: 1000 };
       case 4: return { name: 'cpac5', time: 1000 };
@@ -88,15 +88,15 @@ function App() {
   console.log(getModelForPage(currentPage))
   return (
     <Container className="Window p-0" fluid>
-      <AnimatePresence>
-        {showPopup && (
-          <Container className="InitPopUp p-0" fluid key="initPopup">
-            <motion.div variants={fadeInOut} initial="initial" animate="slowAnimation" exit="slowExit">
-              <InitPopUp onEnableAudio={handleEnableAudio} onClose={handleClosePopup} />
-            </motion.div>
-          </Container>
-        )}
-      </AnimatePresence>
+      {/*<AnimatePresence>*/}
+      {/*  {showPopup && (*/}
+      {/*    <Container className="InitPopUp p-0" fluid key="initPopup">*/}
+      {/*      <motion.div variants={fadeInOut} initial="initial" animate="slowAnimation" exit="slowExit">*/}
+      {/*        <InitPopUp onEnableAudio={handleEnableAudio} onClose={handleClosePopup} />*/}
+      {/*      </motion.div>*/}
+      {/*    </Container>*/}
+      {/*  )}*/}
+      {/*</AnimatePresence>*/}
 
       <Container className="IndexPage p-0" fluid>
         <IndexPage name={model.name} time={model.time} />

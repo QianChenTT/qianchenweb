@@ -3,6 +3,8 @@ import g from '../../../../public/assets/gradient.png';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
+const screenWidth = window.innerWidth;
+const screenHeight = window.innerHeight;
 class TextParticleGeometry {
   geometry;
   material;
@@ -18,8 +20,8 @@ class TextParticleGeometry {
     const loader = new FontLoader();
     loader.load(fontUrl, (font) => {
       const textGeometry = new TextGeometry(text, {
-        font: font,
-        size: size,
+        font,
+        size,
         height: 0.1,
         curveSegments: 12,
         bevelEnabled: true,
@@ -127,7 +129,7 @@ function factorial(n: number) {
 }
 
 export const audioFrequency = new CustomGeometry(
-  10000, // Number of particles
+  window.innerHeight * 10, // Number of particles
   (vertices, i) => {
     const x = ((i - 15000)) * 0.1; // Adjust x position
     const a = 1; // Modify 'a' as needed
@@ -140,4 +142,26 @@ export const audioFrequency = new CustomGeometry(
   }
 );
 
-export const hanGeometry = new TextParticleGeometry('Han', '../../../../Roboto Black_Regular.json', 2000, 10);
+export const hanGeo = new CustomGeometry(
+  calculateParticleCount(), // Adjust particle count based on screen size
+  (vertices, i) => {
+    if ((i % 300) === 0) {
+      const randomx = (Math.random() - 0.5) * (screenWidth * 2);
+      const randomy = (Math.random() - 0.5) * (screenHeight * 2);
+      const randomz = (Math.random() - 0.5) * 500;
+      for (let k = 0; k < 300; k += 3) {
+        vertices[i + k] = randomx; // x coordinate
+        vertices[i + k + 1] = randomy; // y coordinate
+        vertices[i + k + 2] = randomz; // z coordinate
+      }
+    }
+  }
+);
+
+function calculateParticleCount() {
+  const baseCount = 6000;
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const referenceSize = 1920 * 1080;
+  return Math.round(baseCount * (screenWidth * screenHeight) / referenceSize);
+}

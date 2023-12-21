@@ -1,7 +1,6 @@
 .message-bubble {
     border-radius: 10px;
     display: flex;
-    max-width: 80%;
     margin: 5px 0;
 }
 
@@ -13,4 +12,12 @@
 .message-header, .message-body {
     margin: 0;
     padding-left: 10px;
+}
+
+.word {
+    width: auto;
+    height: auto;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    display: inline;
 }
