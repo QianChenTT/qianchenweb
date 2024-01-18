@@ -114,6 +114,22 @@ export const Models: ParticleModelProps[] = [
     }
   },
   {
+    name: 'boi1o1',
+    path: new URL('../../THREE/models/examples/boi1o1.obj', import.meta.url).href,
+    onLoadComplete(Geometry) {
+      Geometry.scale(10000, 10000, 10000);
+      Geometry.rotateX(-11)
+    }
+  },
+  {
+    name: 'boi2o1',
+    path: new URL('../../THREE/models/examples/boi2o1.obj', import.meta.url).href,
+    onLoadComplete(Geometry) {
+      Geometry.scale(10, 10, 10);
+      Geometry.rotateX(-11)
+    }
+  },
+  {
     name: 'wave',
     geometry: flatGeometry.createGeometry(),
     onAnimationFrameUpdate(PerfromPoint, TweenList, Geometry) {
