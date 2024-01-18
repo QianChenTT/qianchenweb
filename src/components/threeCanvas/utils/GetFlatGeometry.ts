@@ -80,7 +80,7 @@ class CustomGeometry {
 
     const points = new THREE.Points(this.geometry, material);
     points.geometry.attributes.position.needsUpdate = true;
-
+    console.log(points.geometry)
     return points.geometry;
   }
 }
