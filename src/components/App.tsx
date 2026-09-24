@@ -34,7 +34,6 @@ function App() {
     }
   };
 
-  // @ts-expect-error
   const model = getModelForPage(currentPage);
 
   // effect for scrolling: handlers live inside the effect so they always see this render's state
