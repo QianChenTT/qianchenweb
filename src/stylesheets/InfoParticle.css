@@ -26,7 +26,7 @@
 
 .info-particle {
     animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite;
-    background-image: url('public/assets/gradient.png');
+    background-image: url('../assets/gradient.png');
     background-color: gold;
     height: 10px;
     width: 10px;

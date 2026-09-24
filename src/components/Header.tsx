@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Container from 'react-bootstrap/Container'
-import backgroundImage from '../../public/assets/backgorund-img.png'
 import '../stylesheets/Header.css'
 import { InfoParticle } from './InfoParticle.tsx';
 

@@ -22,7 +22,7 @@ export const MessageBubble = (props: { speaker: string, message: string, status?
 
   return (
     <div className="message-bubble d-flex">
-      <Image src="../../../public/assets/sun-brand-logo.png" roundedCircle className="message-avatar" />
+      <Image src="/assets/sun-brand-logo.png" roundedCircle className="message-avatar" />
       <div>
         <div className="message-header">
           {props.speaker}

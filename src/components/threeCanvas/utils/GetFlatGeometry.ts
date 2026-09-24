@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import g from '../../../../public/assets/gradient.png';
+import g from '../../../assets/gradient.png';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 

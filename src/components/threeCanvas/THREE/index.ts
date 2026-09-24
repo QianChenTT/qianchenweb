@@ -15,7 +15,7 @@ import type { Group as TweenGroup } from '@tweenjs/tween.js'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import { throttle } from 'lodash'
 
-import g from '../../../../public/assets/gradient.png'
+import g from '../../../assets/gradient.png'
 import { ParticleModelProps, TWEEN_POINT } from '../declare/THREE'
 import VerticesDuplicateRemove from '../utils/VerticesDuplicateRemove.ts'
 import BuiltinShaderAttributeName from '../constant/THREE/BuiltinShaderAttributeName.ts'
