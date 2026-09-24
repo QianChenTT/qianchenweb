@@ -1,0 +1,24 @@
+name: workflow 
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: install packages
+        run: npm ci 
+      - name: run lint build 
+        run: npm run lint 
+      - name: run npm build 
+        run: npm run build
+
+      
