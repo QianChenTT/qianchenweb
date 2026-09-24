@@ -5,13 +5,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js'
 import { PCDLoader } from 'three/examples/jsm/loaders/PCDLoader.js'
 import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader.js'
-// @ts-expect-error
-import { PRWMLoader } from 'three/examples/jsm/loaders/PRWMLoader.js'
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
 
 import type { Tween as TweenProps } from '@tweenjs/tween.js'
 
-export type ALL_LOADER = OBJLoader | FBXLoader | DRACOLoader | GLTFLoader | MMDLoader | PCDLoader | PDBLoader | PRWMLoader | SVGLoader
+export type ALL_LOADER = OBJLoader | FBXLoader | DRACOLoader | GLTFLoader | MMDLoader | PCDLoader | PDBLoader | SVGLoader
 
 export interface TWEEN_POINT {
   x: number

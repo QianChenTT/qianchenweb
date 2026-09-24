@@ -188,7 +188,6 @@ const HouseKeeper = () => {
                   <Col>
                     <Container className="message-container">
                       {historyMessage.map((msg, key) => (
-                        // eslint-disable-next-line react/jsx-key
                         <MessageBubble speaker={msg.speaker} message={msg.message} key={key} />
                       ))}
                     </Container>

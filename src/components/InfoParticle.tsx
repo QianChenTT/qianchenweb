@@ -1,7 +1,7 @@
 import React from 'react'
 import '../stylesheets/InfoParticle.css'
 
-export const InfoParticle = (props: { keyV: number, onClick: Function }) => {
+export const InfoParticle = (props: { keyV: number, onClick: (key: number) => void }) => {
   const handleClick = () => {
     props.onClick(props.keyV)
   }

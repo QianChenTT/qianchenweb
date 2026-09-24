@@ -26,7 +26,7 @@ function getRangeRandom(e: number, t: number) {
 }
 
 type THREE_POINT = THREE.Points<THREE.BufferGeometry, THREE.PointsMaterial>
-interface addonsItem extends addonsBasic { }
+type addonsItem = addonsBasic
 interface ParticleSystemProps {
   CanvasWrapper: HTMLDivElement
   Models: ParticleModelProps[]
@@ -314,20 +314,20 @@ class ParticleSystem {
         .easing(Tween.Easing.Exponential.In)
         // 处理内部私有变量
         .onComplete((o) => {
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.x = o.x
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.y = o.y
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.z = o.z
           o.isPlaying = false
         })
         .onStart((o) => {
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.x = o.x
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.y = o.y
-          // @ts-expect-error
+          // @ts-expect-error -- reset tween.js private _valuesStart; no public API for this
           o.tweenctx!._valuesStart.z = o.z
           o.isPlaying = true
         })

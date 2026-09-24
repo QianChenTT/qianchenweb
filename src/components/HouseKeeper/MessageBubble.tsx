@@ -4,7 +4,7 @@ import Image from 'react-bootstrap/Image';
 import './MessageBubble.css'
 
 export const MessageBubble = (props: { speaker: string, message: string, status?: string }) => {
-  const [messageArr, setMessageArr] = React.useState([]);
+  const [messageArr, setMessageArr] = React.useState<string[]>([]);
   const fadeInOut = useMemo(() => ({
     initial: { opacity: 0 },
     fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } },
@@ -17,7 +17,6 @@ export const MessageBubble = (props: { speaker: string, message: string, status?
     if (wordsWithSpaces.length > 0) {
       wordsWithSpaces[wordsWithSpaces.length - 1] = wordsWithSpaces[wordsWithSpaces.length - 1].trim();
     }
-    // @ts-expect-error
     setMessageArr(wordsWithSpaces);
   }, [props.message]);
 
@@ -30,7 +29,6 @@ export const MessageBubble = (props: { speaker: string, message: string, status?
         </div>
         <div className="message-body">
           {messageArr.map((msg, key) => (
-            // eslint-disable-next-line react/jsx-key
             <span key={key} >
               <motion.div className="word" variants={fadeInOut} initial="initial" animate="slowAnimation" exit="slowExit">
               {msg}

@@ -2,9 +2,12 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import '../stylesheets/InitPopUp.css'
 
-// @ts-expect-error
-// eslint-disable-next-line react/prop-types
-const InitPopUp = ({ onEnableAudio, onClose }) => {
+interface InitPopUpProps {
+  onEnableAudio: () => void;
+  onClose: () => void;
+}
+
+const InitPopUp = ({ onEnableAudio, onClose }: InitPopUpProps) => {
   return (
     <Container className="popup p-0" onClick={onClose} fluid>
       <Container className="popup-content">

@@ -4,21 +4,21 @@ import 'react-h5-audio-player/lib/styles.css';
 import QingLian from '../../public/audios/QingLian.mp3'
 
 const AudioPlayer = (props: { playPause: boolean }) => {
-  const player = useRef(null)
-
-  const HandlePlayPause = () => {
-    if (props.playPause) {
-      // @ts-expect-error
-      player.current.audio.current.play();
-    } else {
-      // @ts-expect-error
-      player.current.audio.current.pause();
-    }
-  }
+  const player = useRef<IAudioPlayer>(null)
+  const { playPause } = props
 
   useEffect(() => {
-    HandlePlayPause()
-  }, [props])
+    const audio = player.current?.audio.current
+    if (!audio) return            // not mounted yet: nothing to do
+
+    if (playPause) {
+      audio.play().catch(() => {
+        // blocked by browser autoplay policy until the user interacts
+      })
+    } else {
+      audio.pause()
+    }
+  }, [playPause])
 
   return (
     <IAudioPlayer
