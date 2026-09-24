@@ -9,12 +9,13 @@ import IndexPage from './threeCanvas/pages/IndexPage/IndexPage.tsx';
 import AudioPlayer from './AudioPlayer.tsx'
 import InitPopUp from './InitPopUp.tsx';
 
+const totalPages = 5;
+
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [scrollReady, setScrollReady] = useState(true);
   const [playPause, setPlayPause] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
-  const totalPages = 5;
   const fadeInOut = useMemo(() => ({
     initial: { opacity: 0 },
     fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } },
@@ -39,31 +40,6 @@ function App() {
 
   const model = getModelForPage(currentPage);
 
-  // Function for handling page logic
-  const pageHandler = (scrollDown: boolean) => {
-    if (scrollReady) {
-      setScrollReady(false);
-      setTimeout(() => setScrollReady(true), 1500); // Adjust timeout as needed
-
-      let newPage = currentPage;
-      if (scrollDown && currentPage < totalPages) {
-        newPage = currentPage + 1;
-      } else if (!scrollDown && currentPage > 0) {
-        newPage = currentPage - 1;
-      }
-
-      if (newPage !== currentPage) {
-        setCurrentPage(newPage);
-      }
-    }
-  };
-  // Scroll event listener
-  const handleWheel = (event: WheelEvent) => {
-    event.preventDefault();
-    const scrollDown = event.deltaY > 0;
-    pageHandler(scrollDown);
-  };
-
   const handleEnableAudio = () => {
     setPlayPause(true)
     handleClosePopup()
@@ -73,11 +49,36 @@ function App() {
     setShowPopup(false);
   };
 
-  // effect for scrolling
+  // effect for scrolling: handlers live inside the effect so they always see this render's state
   useEffect(() => {
+    // Function for handling page logic
+    const pageHandler = (scrollDown: boolean) => {
+      if (scrollReady) {
+        setScrollReady(false);
+        setTimeout(() => setScrollReady(true), 1500); // Adjust timeout as needed
+
+        let newPage = currentPage;
+        if (scrollDown && currentPage < totalPages) {
+          newPage = currentPage + 1;
+        } else if (!scrollDown && currentPage > 0) {
+          newPage = currentPage - 1;
+        }
+
+        if (newPage !== currentPage) {
+          setCurrentPage(newPage);
+        }
+      }
+    };
+    // Scroll event listener
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      const scrollDown = event.deltaY > 0;
+      pageHandler(scrollDown);
+    };
+
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => window.removeEventListener('wheel', handleWheel);
-  }, [scrollReady]);
+  }, [scrollReady, currentPage]);
 
   // effect for popup
   useEffect(() => {

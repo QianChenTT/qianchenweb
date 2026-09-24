@@ -4,7 +4,7 @@ import Tween from '@tweenjs/tween.js';
 import { BufferGeometry } from 'three';
 import { useEffect, useRef, useState } from 'react';
 
-export const Atmosphere = () => {
+export const useAtmosphere = () => {
   let needShake = false;
   const [animating, setAnimating] = useState(false);
   const animatingRef = useRef(animating);
@@ -49,7 +49,6 @@ export const Atmosphere = () => {
           shaking(Point);
         }
       },
-      callback: (Point) => {},
       onChangeModel: (Point) => {
         needShake = true;
         setTimeout(() => { needShake = false }, 1000);

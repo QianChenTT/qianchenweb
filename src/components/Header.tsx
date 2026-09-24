@@ -9,19 +9,18 @@ import backgroundImage from '../../public/assets/backgorund-img.png'
 import '../stylesheets/Header.css'
 import { InfoParticle } from './InfoParticle.tsx';
 
+// Constant content: defined outside the component so its identity is stable across renders
+const subtitles = [
+  'Computer Engineering',
+  'University Of Waterloo',
+  'Cyber Security'
+];
+
 const Header = () => {
   // subtitle typing effect starts here
   const [displayText, setDisplayText] = React.useState('');
   const [subtitleIndex, setSubtitleIndex] = React.useState(0);
   const [charIndex, setCharIndex] = React.useState(0);
-
-  const subtitles = [
-    'Computer Engineering',
-    'University Of Waterloo',
-    'Cyber Security'
-  ];
-
-  // subtitle typing effect starts here
 
   const baseTypingSpeed = 100;
 
