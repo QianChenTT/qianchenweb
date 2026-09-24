@@ -6,16 +6,12 @@ import Header from './Header.tsx';
 import Body from './Body.tsx';
 import HouseKeeper from './HouseKeeper/HouseKeeper.tsx';
 import IndexPage from './threeCanvas/pages/IndexPage/IndexPage.tsx';
-import AudioPlayer from './AudioPlayer.tsx'
-import InitPopUp from './InitPopUp.tsx';
 
 const totalPages = 5;
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [scrollReady, setScrollReady] = useState(true);
-  const [playPause, setPlayPause] = useState(false)
-  const [showPopup, setShowPopup] = useState(false);
   const fadeInOut = useMemo(() => ({
     initial: { opacity: 0 },
     fastAnimation: { opacity: 1, transition: { duration: 0.5, delay: 0 } },
@@ -39,15 +35,6 @@ function App() {
   };
 
   const model = getModelForPage(currentPage);
-
-  const handleEnableAudio = () => {
-    setPlayPause(true)
-    handleClosePopup()
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
 
   // effect for scrolling: handlers live inside the effect so they always see this render's state
   useEffect(() => {
@@ -80,30 +67,12 @@ function App() {
     return () => window.removeEventListener('wheel', handleWheel);
   }, [scrollReady, currentPage]);
 
-  // effect for popup
-  useEffect(() => {
-    const s = setTimeout(() => { setShowPopup(true) }, 1000)
-    return () => { clearTimeout(s) }
-  }, []);
   console.log(currentPage);
   console.log(getModelForPage(currentPage))
   return (
     <Container className="Window p-0" fluid>
-      {/*<AnimatePresence>*/}
-      {/*  {showPopup && (*/}
-      {/*    <Container className="InitPopUp p-0" fluid key="initPopup">*/}
-      {/*      <motion.div variants={fadeInOut} initial="initial" animate="slowAnimation" exit="slowExit">*/}
-      {/*        <InitPopUp onEnableAudio={handleEnableAudio} onClose={handleClosePopup} />*/}
-      {/*      </motion.div>*/}
-      {/*    </Container>*/}
-      {/*  )}*/}
-      {/*</AnimatePresence>*/}
-
       <Container className="IndexPage p-0" fluid>
         <IndexPage name={model.name} time={model.time} />
-      </Container>
-      <Container className="AudioPlayer p-0 hidden" fluid>
-        <AudioPlayer playPause={playPause} />
       </Container>
       <Container className="HouseKeeper p-0">
         <HouseKeeper/>

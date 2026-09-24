@@ -27,16 +27,6 @@ background-image:linear-gradient(90deg,#ec597f,#e4551a 40%)
     z-index: 1;
 }
 
-.InitPopUp {
-    position: fixed;
-    z-index: 102;
-}
-
-.AudioPlayer {
-    position: relative;
-    z-index: 100;
-}
-
 .HouseKeeper {
     position: fixed;
     /*bottom: 20px;*/
