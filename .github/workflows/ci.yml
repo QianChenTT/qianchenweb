@@ -5,28 +5,37 @@ on:
   push:
     branches: [main]
 
+# Least privilege for the automatic GITHUB_TOKEN: read-only unless a job needs more
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   build-logic:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Actions pinned to full commit SHAs (tags can be moved; SHAs cannot)
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
       - name: install packages
         run: npm ci
-      - name: run lint build
+      - name: run lint
         run: npm run lint
       - name: run npm build
         run: npm run build
+      # Gate policy: block only high/critical advisories in production dependencies
+      - name: dependency audit (production, high+)
+        run: npm audit --omit=dev --audit-level=high
 
   secret-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0 # we need all the commits not the latest one, fetch-depth: 0 does that
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
