@@ -1,4 +1,4 @@
-name: CI 
+name: CI
 
 on:
   pull_request:
@@ -15,19 +15,18 @@ jobs:
           node-version: 22
           cache: npm
       - name: install packages
-        run: npm ci 
-      - name: run lint build 
-        run: npm run lint 
-      - name: run npm build 
+        run: npm ci
+      - name: run lint build
+        run: npm run lint
+      - name: run npm build
         run: npm run build
 
   secret-scan:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
-      - uses: action/checkout@v4 
+      - uses: actions/checkout@v4
         with:
-          fetch-depth:0
-      - uses: gitleaks/gitleaks-action@v2 
+          fetch-depth: 0 # we need all the commits not the latest one, fetch-depth: 0 does that
+      - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
