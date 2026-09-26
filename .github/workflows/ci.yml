@@ -39,3 +39,15 @@ jobs:
       - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # SAST: scan our own source code for insecure patterns
+  sast:
+    runs-on: ubuntu-latest
+    container:
+      # Semgrep CLI image pinned by digest
+      image: semgrep/semgrep@sha256:32e459968daabe7ab86968184a29109b9564aa00392401156f9788452b42786b # 1.178.0
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # --error: any finding fails the job, --metrics=off: send no usage data to Semgrep
+      - name: semgrep scan
+        run: semgrep scan --config p/javascript --config p/typescript --config p/react --error --metrics=off
