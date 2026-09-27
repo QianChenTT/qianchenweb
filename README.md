@@ -1,28 +1,32 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./info.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 # qianchenweb
+
+Personal site of Han Shao — Computer Engineering at the University of Waterloo, focused on security engineering.
+
+The site is a single-page React app with a three.js particle system that morphs between models as you scroll.
+
+## Stack
+
+- React + TypeScript, built with Vite
+- three.js particle system, framer-motion for transitions
+- Hosted on AWS Amplify, deployed from `main`
+
+## Security pipeline
+
+Every pull request into `main` must pass three required checks (enforced by a branch ruleset; no direct pushes):
+
+| Check | What it does |
+|---|---|
+| `build-logic` | `npm ci` from the lockfile, lint, build, and `npm audit --omit=dev --audit-level=high` (fails on high/critical advisories in production dependencies) |
+| `secret-scan` | gitleaks over the full commit history of the PR |
+| `sast` | Semgrep static analysis (JavaScript, TypeScript and React rulesets) |
+
+Workflow hardening: least-privilege `GITHUB_TOKEN` (read-only), third-party actions pinned to full commit SHAs, and the Semgrep image pinned by digest. Each gate was verified with a deliberate failing pull request before being relied on.
+
+## Run locally
+
+```bash
+npm ci
+npm run dev      # dev server
+npm run build    # type-check and production build
+npm run lint
+```

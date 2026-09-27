@@ -1,12 +1,7 @@
-import React, { SelectHTMLAttributes } from 'react'
-import HouseKeeper from './HouseKeeper/HouseKeeper.tsx'
-import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
+import React from 'react'
 import Row from 'react-bootstrap/Row';
-import Tab from 'react-bootstrap/Tab';
 import Container from 'react-bootstrap/Container'
 import '../stylesheets/Header.css'
-import { InfoParticle } from './InfoParticle.tsx';
 
 // Constant content: defined outside the component so its identity is stable across renders
 const subtitles = [
@@ -15,99 +10,50 @@ const subtitles = [
   'Cyber Security'
 ];
 
+const baseTypingSpeed = 100;
+
 const Header = () => {
-  // subtitle typing effect starts here
+  // subtitle typing effect: type the subtitle, hold, delete it, move to the next one
   const [displayText, setDisplayText] = React.useState('');
   const [subtitleIndex, setSubtitleIndex] = React.useState(0);
-  const [charIndex, setCharIndex] = React.useState(0);
-
-  const baseTypingSpeed = 100;
 
   React.useEffect(() => {
     const currentDisplay = subtitles[subtitleIndex];
-    const printTimeouts: Array<NodeJS.Timeout | undefined> = [];
+    const printTimeouts: Array<ReturnType<typeof setTimeout>> = [];
 
     for (let i = 0; i < currentDisplay.length; i++) {
-      const typeDisplay = setTimeout(() => {
-        setDisplayText(prev => {
-          return prev + currentDisplay[i]
-        });
-      }, i * baseTypingSpeed)
-      printTimeouts.push(typeDisplay)
+      printTimeouts.push(setTimeout(() => {
+        setDisplayText(prev => prev + currentDisplay[i]);
+      }, i * baseTypingSpeed));
     }
 
     for (let i = 0; i < currentDisplay.length; i++) {
-      const typeDisplay = setTimeout(() => {
-        setDisplayText(prev => {
-          return prev.slice(0, prev.length - 1)
-        });
-      }, i * baseTypingSpeed + 2000 + 2000)
-      printTimeouts.push(typeDisplay)
+      printTimeouts.push(setTimeout(() => {
+        setDisplayText(prev => prev.slice(0, prev.length - 1));
+      }, i * baseTypingSpeed + 4000));
     }
 
-    const timeoutId = setTimeout(() => {
-      setSubtitleIndex(prev => {
-        return ((prev + 1) % subtitles.length)
-      });
-    }, 2 * (currentDisplay.length - 1) * baseTypingSpeed + 2000 + 1000)
-
-    printTimeouts.push(timeoutId)
+    printTimeouts.push(setTimeout(() => {
+      setSubtitleIndex(prev => (prev + 1) % subtitles.length);
+    }, 2 * (currentDisplay.length - 1) * baseTypingSpeed + 3000));
 
     return () => {
       printTimeouts.forEach(clearTimeout)
     }
   }, [subtitleIndex]);
 
-  // subtitle typing effect ends here
-
-  const handleClick = (key: number) => {
-    console.log(key)
-  }
   return (
-    <>
-      <Container className="header p-0" fluid>
-        <Container className="header-titles" fluid>
-          <Row>
-            <h1 className="header-title"> Han </h1>
-          </Row>
-          <Row>
-            <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2><div className="blinking-caret"></div>
-          </Row>
-        </Container>
-        <InfoParticle keyV={1} onClick={handleClick}/>
+    <Container className="header p-0" fluid>
+      <Container className="header-titles" fluid>
+        <Row>
+          <h1 className="header-title"> Han </h1>
+        </Row>
+        <Row>
+          <h2 className="header-subtitle"> {'~ han$ ' + displayText} </h2><div className="blinking-caret"></div>
+        </Row>
       </Container>
-    </>
+    </Container>
   )
 }
 
 export default Header;
-
-// Meme Generator Header
-{ /* <img src="/assets/brand-logo.png" alt="" className="header-brand-logo"/> */
-}
-{ /* <div className="header-text">Meme Generator</div> */
-}
-
-// prev version subtitle
-// React.useEffect(() => {
-//   // Typing effect for each subtitle
-//   if (charIndex < subtitles[subtitleIndex].length) {
-//     const timeoutId1 = setTimeout(() => {
-//       setDisplayText((prev) => prev + subtitles[subtitleIndex][charIndex]);
-//       setCharIndex(charIndex + 1);
-//     }, 100);
-//
-//     return () => clearTimeout(timeoutId1);
-//   } else {
-//     if(displayText.length === 0){
-//       setCharIndex(0)
-//       setSubtitleIndex((prevIndex) => (prevIndex + 1) % subtitles.length);
-//     }
-//     const timeoutId3 = setTimeout(() => {
-//       setDisplayText((prev) => prev.slice(0, prev.length - 1));
-//     },100)
-//
-//     return () => clearTimeout(timeoutId3);
-//   }
-//
-// }, [charIndex, subtitleIndex, displayText.length]);
