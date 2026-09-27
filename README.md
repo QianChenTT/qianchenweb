@@ -22,6 +22,8 @@ Every pull request into `main` must pass three required checks (enforced by a br
 
 Workflow hardening: least-privilege `GITHUB_TOKEN` (read-only), third-party actions pinned to full commit SHAs, and the Semgrep image pinned by digest. Each gate was verified with a deliberate failing pull request before being relied on.
 
+Response headers (`customHttp.yml`, served by Amplify/CloudFront): HSTS, an enforced same-origin Content-Security-Policy, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, anti-framing (`frame-ancestors 'none'` / `X-Frame-Options`) and a restrictive `Permissions-Policy`.
+
 ## Run locally
 
 ```bash
